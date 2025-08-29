@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== Global Animations (keep for sections) ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-fadeIn { animation: fadeIn 1.2s ease-in-out forwards; }
+.animate-slideDown { animation: slideDown 1s ease-out forwards; }
+.animate-slideUp { animation: slideUp 1s ease-out forwards; }
+.animate-fadeUp { animation: fadeUp 1s ease-out forwards; }
+
+@keyframes zoomOut {
+  from { transform: scale(1.1); }
+  to { transform: scale(1); }
+}
+.animate-zoomOut {
+  animation: zoomOut 0.7s ease-out forwards;
+  transform-origin: center;
+}
+
+/* Ocean wave: gentle left->right with a soft bob */
+@keyframes wave-left-right {
+  0%   { transform: translateX(-8px) translateY(0); }
+  25%  { transform: translateX(-4px) translateY(-2px); }
+  50%  { transform: translateX(0)    translateY(0); }
+  75%  { transform: translateX(4px)  translateY(2px); }
+  100% { transform: translateX(8px)  translateY(0); }
+}
+.animate-wave {
+  animation: wave-left-right 3s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Scroll animations (keep for sections, NOT footer) */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
+}
+.animate-active {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) rotate(0) !important;
+}
+
+/* Slide in right (image special) */
+.slide-in-right {
+  transform: translateX(120px);
+}
+.slide-in-right.animate-active {
+  transform: translateX(0) !important;
+}
+
+/* Unique section animations */
+.fade-down { transform: translateY(-30px); }
+.scale-up { transform: scale(0.8); }
+.flip-in { transform: rotateY(90deg); }
+.slide-up { transform: translateY(40px); }
+.fade-up { transform: translateY(30px); }
+
+.pulse.animate-active { animation: pulse 1s ease-in-out infinite alternate; }
+.bounce-in { transform: translateY(50px) scale(0.8); }
+.bounce-in.animate-active { animation: bounceIn 0.8s ease-out forwards; }
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.2); }
+}
+@keyframes bounceIn {
+  0% { transform: translateY(50px) scale(0.8); opacity: 0; }
+  60% { transform: translateY(-10px) scale(1.05); opacity: 1; }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Background drift */
+@keyframes bg-pan {
+  0% { background-position: 50% 50%; transform: translateZ(0); }
+  50% { background-position: 48% 52%; }
+  100% { background-position: 50% 50%; }
+}
+.animate-bg-pan { animation: bg-pan 14s ease-in-out infinite; }
+
+/* Ripple animation */
+@keyframes ripple {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+.animate-ripple { animation: ripple 2s ease-out infinite; }

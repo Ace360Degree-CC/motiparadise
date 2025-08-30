@@ -6,8 +6,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 export default function Contcat() {
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
-  const [rooms, setRooms] = useState(0);
-  const [loading, setLoading] = useState(false); // ✅ new state
+  const [loading, setLoading] = useState(false);
   const sectionRef = useRef(null);
 
   const bump = (setter, delta) => setter((v) => Math.max(0, v + delta));
@@ -28,30 +27,24 @@ export default function Contcat() {
     return () => io.disconnect();
   }, []);
 
-  // 🔹 handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // ✅ show loading
+    setLoading(true);
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
-    // include counters
     data.adults = adults;
     data.children = children;
-    data.rooms = rooms;
-
-    console.log("📦 Sending data:", data);
 
     try {
-      const res = await fetch("/api/form", {
+      const res = await fetch("https://motiparadise.fabthefamily.com/api/form.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
       const result = await res.json();
-      console.log("📩 API response:", result);
 
       if (result.success) {
         Swal.fire({
@@ -59,9 +52,9 @@ export default function Contcat() {
           text: "Booking submitted successfully!",
           icon: "success",
           confirmButtonText: "OK",
-          background: "#fff", // ✅ white bg
-          color: "#000", // ✅ black text
-          confirmButtonColor: "#6E8628", // green button
+          background: "#fff",
+          color: "#000",
+          confirmButtonColor: "#6E8628",
         });
         e.target.reset();
       } else {
@@ -87,7 +80,7 @@ export default function Contcat() {
         confirmButtonColor: "#6E8628",
       });
     } finally {
-      setLoading(false); // ✅ stop loading
+      setLoading(false);
     }
   };
 
@@ -97,14 +90,13 @@ export default function Contcat() {
       className="py-16 bg-cover bg-center overflow-visible relative"
       style={{ backgroundImage: "url('/background.png')" }}
     >
-      {/* subtle bg drift */}
       <div
         className="absolute inset-0 pointer-events-none bg-[length:110%_110%] bg-center animate-bg-pan"
         style={{ backgroundImage: "url('/background.png')" }}
       />
 
       <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-        {/* LEFT: Black Panel */}
+        {/* LEFT */}
         <div className="lg:col-span-5 -my-25">
           <div className="aos aos-slide-left bg-[#202020] text-white p-8 md:p-12 shadow-lg h-[700px] flex flex-col justify-center relative z-10">
             <div className="w-14 h-[2px] bg-white/50 mb-6" />
@@ -126,10 +118,7 @@ export default function Contcat() {
           <form onSubmit={handleSubmit} className="p-6 md:p-8 mt-20 lg:mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* Name */}
-              <div
-                className="md:col-span-2 aos aos-stagger"
-                style={{ transitionDelay: "80ms" }}
-              >
+              <div className="md:col-span-2 aos aos-stagger">
                 <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
                   Name:
                 </label>
@@ -142,7 +131,7 @@ export default function Contcat() {
               </div>
 
               {/* Email */}
-              <div className="aos aos-stagger" style={{ transitionDelay: "160ms" }}>
+              <div className="aos aos-stagger">
                 <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
                   Email ID:
                 </label>
@@ -155,7 +144,7 @@ export default function Contcat() {
               </div>
 
               {/* Mobile */}
-              <div className="aos aos-stagger" style={{ transitionDelay: "240ms" }}>
+              <div className="aos aos-stagger">
                 <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
                   Mobile:
                 </label>
@@ -168,7 +157,7 @@ export default function Contcat() {
               </div>
 
               {/* Check-in */}
-              <div className="aos aos-stagger" style={{ transitionDelay: "320ms" }}>
+              <div className="aos aos-stagger">
                 <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
                   Checkin:
                 </label>
@@ -181,7 +170,7 @@ export default function Contcat() {
               </div>
 
               {/* Checkout */}
-              <div className="aos aos-stagger" style={{ transitionDelay: "400ms" }}>
+              <div className="aos aos-stagger">
                 <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
                   Checkout:
                 </label>
@@ -194,14 +183,11 @@ export default function Contcat() {
               </div>
 
               {/* Guests */}
-              <div
-                className="md:col-span-2 aos aos-stagger"
-                style={{ transitionDelay: "480ms" }}
-              >
+              <div className="md:col-span-2 aos aos-stagger">
                 <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
                   Guests:
                 </label>
-                <div className="flex flex-col md:flex-row gap-3 items-stretch bg-white text-black px-4 py-3">
+                <div className="flex flex-col md:flex-row md:justify-between gap-4 bg-white text-black px-4 py-3 rounded">
                   <Counter
                     label="Adults"
                     value={adults}
@@ -214,18 +200,12 @@ export default function Contcat() {
                     onDec={() => bump(setChildren, -1)}
                     onInc={() => bump(setChildren, 1)}
                   />
-                  <Counter
-                    label="Rooms"
-                    value={rooms}
-                    onDec={() => bump(setRooms, -1)}
-                    onInc={() => bump(setRooms, 1)}
-                  />
                 </div>
               </div>
             </div>
 
             {/* Submit */}
-            <div className="mt-6 aos aos-pop" style={{ transitionDelay: "560ms" }}>
+            <div className="mt-6 aos aos-pop">
               <button
                 type="submit"
                 disabled={loading}
@@ -258,52 +238,40 @@ export default function Contcat() {
                 ) : (
                   <span className="relative z-10">Submit</span>
                 )}
-                <span className="absolute inset-0 scale-0 rounded-full bg-white/10 group-hover:scale-[8] transition-transform duration-700" />
               </button>
             </div>
           </form>
         </div>
       </div>
 
-      {/* === Animations CSS === */}
       <style jsx>{`
         .aos { opacity: 0; transform: translateY(20px); transition: all 0.7s ease; }
         .aos-in { opacity: 1; transform: translateY(0); }
-        .aos-slide-left { transform: translateX(-40px); }
-        .aos-slide-left.aos-in { transform: translateX(0); }
-        .aos-fade-down { transform: translateY(-20px); }
-        .aos-fade-down.aos-in { transform: translateY(0); }
-        .aos-fade-up { transform: translateY(30px); }
-        .aos-fade-up.aos-in { transform: translateY(0); }
-        .aos-scale-pop { transform: scale(0.8); }
-        .aos-scale-pop.aos-in { transform: scale(1); }
-        .aos-pop { transform: scale(0.9); }
-        .aos-pop.aos-in { transform: scale(1); }
-        .aos-stagger { transform: translateY(15px); }
-        .aos-stagger.aos-in { transform: translateY(0); }
+        .animate-bg-pan { animation: bg-pan 20s ease-in-out infinite; }
         @keyframes bg-pan {
           0% { background-position: 50% 50%; }
           50% { background-position: 55% 52%; }
           100% { background-position: 50% 50%; }
         }
-        .animate-bg-pan { animation: bg-pan 20s ease-in-out infinite; }
       `}</style>
     </section>
   );
 }
 
-/* Helpers */
+/* Counter */
 function Counter({ label, value, onDec, onInc }) {
   return (
-    <div className="flex-1 flex items-center justify-between gap-3">
-      <span className="font-[Oswald] uppercase">{label} {value}</span>
-      <div className="flex items-center gap-2">
+    <div className="flex items-center justify-between w-full md:w-auto gap-3">
+      <span className="font-[Oswald] uppercase">{label}</span>
+      <div className="flex items-center border border-black/30 px-2 rounded">
         <IconButton onClick={onDec}>–</IconButton>
+        <span className="w-8 text-center font-[Oswald]">{value}</span>
         <IconButton onClick={onInc}>+</IconButton>
       </div>
     </div>
   );
 }
+
 function IconButton({ children, onClick }) {
   return (
     <button
@@ -311,7 +279,7 @@ function IconButton({ children, onClick }) {
       onClick={onClick}
       className="w-7 h-7 grid place-items-center border border-black/30 hover:border-black transition"
     >
-      <span className="leading-none">{children}</span>
+      {children}
     </button>
   );
 }

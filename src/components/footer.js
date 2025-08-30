@@ -49,16 +49,16 @@ export default function Footer() {
               ref={iconsRef}
               className="icons-row grid grid-cols-4 gap-6 items-center text-center"
             >
-              <Link href="https://facebook.com" className="inline-flex justify-center">
+              <Link href="https://www.facebook.com/profile.php?id=61577629348900" className="inline-flex justify-center">
                 <FacebookIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
-              <Link href="https://instagram.com/motiparadise" className="inline-flex justify-center">
+              <Link href="https://www.instagram.com/motiparadise_?utm_source=qr&igsh=YjJyZGxuZ3hqbXox" className="inline-flex justify-center">
                 <InstagramIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
-              <Link href="https://youtube.com/@fabthefamilystays" className="inline-flex justify-center">
+              <Link href="https://www.youtube.com/@MotiParadise" className="inline-flex justify-center">
                 <YoutubeIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
-              <Link href="tel:+919999999999" className="inline-flex justify-center">
+              <Link href="tel:+918905279300" className="inline-flex justify-center">
                 <PhoneIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
             </div>
@@ -80,7 +80,7 @@ export default function Footer() {
                 Fab The Family Stays
               </p>
               <p className="reveal font-[Oswald] text-[#6E8628] text-lg sm:text-xl font-semibold">
-                +91-XXXXXXXXXX
+                +91-8905279300
               </p>
             </div>
           </div>

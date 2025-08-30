@@ -33,7 +33,7 @@ export default function Navbar() {
           }
         })
       },
-      { threshold: 0.6 } // 60% of section in view
+      { threshold: 0.6 }
     )
 
     sections.forEach((section) => {
@@ -53,16 +53,16 @@ export default function Navbar() {
         loaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"
       }`}
     >
-      {/* Logo Section */}
-      <div className="flex items-center space-x-2">
+      {/* Logo Section → link to home */}
+      <Link href="/" className="flex items-center space-x-2">
         <Image
           src="/logo.png"
           alt="Moti Paradise Logo"
           width={130}
           height={80}
-          className="md:w-[150px] md:h-[70px]"
+          className="md:w-[150px] md:h-[70px] cursor-pointer"
         />
-      </div>
+      </Link>
 
       {/* Desktop Menu */}
       <ul className="hidden md:flex space-x-8 lg:space-x-12 text-gray-800 font-oswald text-[16px] lg:text-[18px]">
@@ -79,7 +79,7 @@ export default function Navbar() {
               className={`transition-colors duration-300 hover:text-[#6E8628] ${
                 active === item.href ? "text-[#6E8628] font-semibold" : ""
               }`}
-              onClick={() => setMenuOpen(false)} // close if clicked on mobile
+              onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>
@@ -91,12 +91,13 @@ export default function Navbar() {
         ))}
       </ul>
 
-      {/* Desktop Button */}
+      {/* Desktop Button with animation */}
       <Link
         href="#contact"
-        className={`hidden md:block border border-[#6E8628] text-[#202020] px-5 py-2 rounded transition-all duration-300 hover:bg-[#6E8628] hover:text-white font-oswald text-[18px] lg:text-[20px] ${
-          loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-        }`}
+        className={`hidden md:block border border-[#6E8628] text-[#202020] px-5 py-2 rounded font-oswald text-[18px] lg:text-[20px]
+          transition-all duration-300 hover:bg-[#6E8628] hover:text-white
+          ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
+          animate-pulse hover:scale-105`}
         style={{ transitionDelay: `${menuItems.length * 150}ms` }}
       >
         BOOK NOW!
@@ -138,17 +139,19 @@ export default function Navbar() {
               active === item.href ? "text-[#6E8628] font-semibold" : "text-gray-800"
             }`}
             style={{ transitionDelay: `${index * 120}ms` }}
-            onClick={() => setMenuOpen(false)} // close menu on click
+            onClick={() => setMenuOpen(false)}
           >
             {item.label}
           </Link>
         ))}
 
-        {/* Mobile Button */}
+        {/* Mobile Button with animation */}
         <Link
           href="#contact"
-          onClick={() => setMenuOpen(false)} // close menu after click
-          className="border border-[#6E8628] text-[#202020] px-5 py-2 rounded transition-all duration-300 hover:bg-[#6E8628] hover:text-white font-oswald text-[18px]"
+          onClick={() => setMenuOpen(false)}
+          className="border border-[#6E8628] text-[#202020] px-5 py-2 rounded font-oswald text-[18px]
+            transition-all duration-300 hover:bg-[#6E8628] hover:text-white
+            animate-pulse hover:scale-105"
         >
           BOOK NOW!
         </Link>

@@ -18,14 +18,41 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-      {/* Other Sections */}
-      <PrivateEscapeSection />
-      <Gallery />
-      <Features />
-      <Location />
-      <Virtual />
-      <Guest />
-      <Contcat />
+      {/* About */}
+      <section id="about">
+        <PrivateEscapeSection />
+      </section>
+
+      {/* Gallery */}
+      <section id="gallery">
+        <Gallery />
+      </section>
+
+      {/* Features */}
+      <section id="features">
+        <Features />
+      </section>
+
+      {/* Location Advantage */}
+      <section id="location">
+        <Location />
+      </section>
+
+      {/* Virtual Tour */}
+      <section id="tour">
+        <Virtual />
+      </section>
+
+      {/* Testimonials */}
+      <section id="guest">
+        <Guest />
+      </section>
+
+      {/* Contact */}
+      <section id="contact">
+        <Contcat />
+      </section>
+
       <Footer />
     </main>
   )

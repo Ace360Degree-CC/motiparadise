@@ -8,38 +8,60 @@ export default function Navbar() {
   const [loaded, setLoaded] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  useEffect(() => {
-    // Smooth fade-in on page load
-    setLoaded(true)
-
-    // Track active section based on hash
-    const handleHashChange = () => {
-      setActive(window.location.hash)
-    }
-    handleHashChange()
-    window.addEventListener("hashchange", handleHashChange)
-    return () => window.removeEventListener("hashchange", handleHashChange)
-  }, [])
-
   const menuItems = [
     { href: "#about", label: "About Us" },
     { href: "#gallery", label: "Gallery" },
     { href: "#features", label: "Features" },
     { href: "#location", label: "Location Advantage" },
     { href: "#tour", label: "Virtual Tour" },
-    { href: "#testimonials", label: "Testimonials" },
+    { href: "#guest", label: "Testimonials" },
     { href: "#contact", label: "Contact" },
   ]
 
+  useEffect(() => {
+    setLoaded(true)
+
+    // IntersectionObserver to track active section
+    const sectionIds = menuItems.map((item) => item.href.replace("#", ""))
+    const sections = sectionIds.map((id) => document.getElementById(id))
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(`#${entry.target.id}`)
+          }
+        })
+      },
+      { threshold: 0.6 } // 60% of section in view
+    )
+
+    sections.forEach((section) => {
+      if (section) observer.observe(section)
+    })
+
+    return () => {
+      sections.forEach((section) => {
+        if (section) observer.unobserve(section)
+      })
+    }
+  }, [])
+
   return (
     <nav
-      className={`flex items-center justify-between px-6 md:px-12 lg:px-20 py-4 shadow-sm bg-white transition-all duration-700 ease-in-out ${
+      className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-12 lg:px-20 py-4 shadow-sm bg-white transition-all duration-700 ease-in-out ${
         loaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"
       }`}
     >
       {/* Logo Section */}
       <div className="flex items-center space-x-2">
-        <Image src="/logo.png" alt="Moti Paradise Logo" width={130} height={80} className="md:w-[150px] md:h-[70px]" />
+        <Image
+          src="/logo.png"
+          alt="Moti Paradise Logo"
+          width={130}
+          height={80}
+          className="md:w-[150px] md:h-[70px]"
+        />
       </div>
 
       {/* Desktop Menu */}
@@ -57,6 +79,7 @@ export default function Navbar() {
               className={`transition-colors duration-300 hover:text-[#6E8628] ${
                 active === item.href ? "text-[#6E8628] font-semibold" : ""
               }`}
+              onClick={() => setMenuOpen(false)} // close if clicked on mobile
             >
               {item.label}
             </Link>
@@ -69,14 +92,15 @@ export default function Navbar() {
       </ul>
 
       {/* Desktop Button */}
-      <button
+      <Link
+        href="#contact"
         className={`hidden md:block border border-[#6E8628] text-[#202020] px-5 py-2 rounded transition-all duration-300 hover:bg-[#6E8628] hover:text-white font-oswald text-[18px] lg:text-[20px] ${
           loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
         }`}
         style={{ transitionDelay: `${menuItems.length * 150}ms` }}
       >
         BOOK NOW!
-      </button>
+      </Link>
 
       {/* Mobile Hamburger */}
       <button
@@ -120,9 +144,14 @@ export default function Navbar() {
           </Link>
         ))}
 
-        <button className="border border-[#6E8628] text-[#202020] px-5 py-2 rounded transition-all duration-300 hover:bg-[#6E8628] hover:text-white font-oswald text-[18px]">
+        {/* Mobile Button */}
+        <Link
+          href="#contact"
+          onClick={() => setMenuOpen(false)} // close menu after click
+          className="border border-[#6E8628] text-[#202020] px-5 py-2 rounded transition-all duration-300 hover:bg-[#6E8628] hover:text-white font-oswald text-[18px]"
+        >
           BOOK NOW!
-        </button>
+        </Link>
       </div>
     </nav>
   )

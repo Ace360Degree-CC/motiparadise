@@ -79,8 +79,7 @@ export default function Hero() {
         {/* Heading */}
         <h1
           data-animate="animate-slideDown"
-          className="text-3xl sm:text-6xl font-[Cinzel] mb-4 leading-tight -mt-[10px] opacity-0"
-        >
+          className="text-3xl sm:text-6xl font-[Cinzel] mb-4 leading-tight -mt-[10px] opacity-0">
           WELCOME TO MOTI <br /> PARADISE VILLA
         </h1>
 

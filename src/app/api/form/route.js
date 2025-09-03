@@ -1,61 +1,77 @@
-import mysql from "mysql2/promise";
-import nodemailer from "nodemailer";
+"use client";
+import { useState } from "react";
 
-export async function POST(req) {
-  try {
-    const body = await req.json();
-    const { name, email, mobile, checkin, checkout, adults, children, rooms } = body;
+export default function BookingForm() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    checkin: "",
+    checkout: "",
+    adults: "",
+    children: "",
+    rooms: "",
+  });
 
-    // 1. Save to DB
-    const connection = await mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
-    });
+  const [message, setMessage] = useState("");
 
-    await connection.execute(
-      `INSERT INTO bookings (name, email, mobile, checkin, checkout, adults, children, rooms)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [name, email, mobile, checkin, checkout, adults, children, rooms]
-    );
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-    // 2. Create transporter
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      secure: false, // set true if using port 465
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("Sending...");
 
-    // 3. Send Email with try/catch
     try {
-      await transporter.sendMail({
-        from: `"Moti Paradise" <${process.env.SMTP_USER}>`,
-        to: "customercare@a360pl.com",
-        subject: `New Booking from ${name}`,
-        text: `
-          Name: ${name}
-          Email: ${email}
-          Mobile: ${mobile}
-          Check-in: ${checkin}
-          Checkout: ${checkout}
-          Adults: ${adults}
-          Children: ${children}
-          Rooms: ${rooms}
-        `,
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
-      console.log("✅ Email sent successfully");
-    } catch (err) {
-      console.error("❌ Email sending error:", err);
-    }
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
-  } catch (err) {
-    console.error("Booking error:", err);
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
-  }
+      const data = await res.json();
+      if (res.ok) {
+        setMessage("✅ Booking submitted successfully!");
+        setForm({
+          name: "",
+          email: "",
+          mobile: "",
+          checkin: "",
+          checkout: "",
+          adults: "",
+          children: "",
+          rooms: "",
+        });
+      } else {
+        setMessage(`❌ Error: ${data.error}`);
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("❌ Something went wrong.");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 p-6 border rounded-lg shadow-md bg-white">
+      <input type="text" name="name" placeholder="Name" value={form.name} onChange={handleChange} required className="w-full border p-2" />
+      <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required className="w-full border p-2" />
+      <input type="tel" name="mobile" placeholder="Mobile" value={form.mobile} onChange={handleChange} required className="w-full border p-2" />
+
+      <div className="flex gap-2">
+        <input type="date" name="checkin" value={form.checkin} onChange={handleChange} required className="w-1/2 border p-2" />
+        <input type="date" name="checkout" value={form.checkout} onChange={handleChange} required className="w-1/2 border p-2" />
+      </div>
+
+      <input type="number" name="adults" placeholder="Adults" value={form.adults} onChange={handleChange} required className="w-full border p-2" />
+      <input type="number" name="children" placeholder="Children" value={form.children} onChange={handleChange} className="w-full border p-2" />
+      <input type="number" name="rooms" placeholder="Rooms" value={form.rooms} onChange={handleChange} required className="w-full border p-2" />
+
+      <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded">
+        Book Now
+      </button>
+
+      {message && <p className="text-center mt-2">{message}</p>}
+    </form>
+  );
 }

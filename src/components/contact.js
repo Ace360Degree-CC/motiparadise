@@ -46,28 +46,28 @@ export default function Contcat() {
 
       const result = await res.json();
 
-      if (result.success) {
-        Swal.fire({
-          title: "Success!",
-          text: "Booking submitted successfully!",
-          icon: "success",
-          confirmButtonText: "OK",
-          background: "#fff",
-          color: "#000",
-          confirmButtonColor: "#6E8628",
-        });
-        e.target.reset();
-      } else {
-        Swal.fire({
-          title: "Error",
-          text: result.error || "Something went wrong",
-          icon: "error",
-          confirmButtonText: "OK",
-          background: "#fff",
-          color: "#000",
-          confirmButtonColor: "#6E8628",
-        });
-      }
+if (res.ok && result.success) {
+  Swal.fire({
+    title: "Success!",
+    text: "Booking submitted successfully!",
+    icon: "success",
+    confirmButtonText: "OK",
+    background: "#fff",
+    color: "#000",
+    confirmButtonColor: "#6E8628",
+  });
+  e.target.reset();
+} else {
+  Swal.fire({
+    title: "Error",
+    text: result.error || "Something went wrong",   // ✅ shows actual error
+    icon: "error",
+    confirmButtonText: "OK",
+    background: "#fff",
+    color: "#000",
+    confirmButtonColor: "#6E8628",
+  });
+}
     } catch (err) {
       console.error("❌ Submit failed:", err);
       Swal.fire({

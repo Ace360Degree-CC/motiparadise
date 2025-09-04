@@ -10,7 +10,7 @@ export async function POST(req) {
     if (!name || !email || !mobile || !checkin || !checkout) {
       return new Response(
         JSON.stringify({ success: false, error: "Missing required fields" }),
-        { status: 400 }
+        { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
 
@@ -31,15 +31,16 @@ export async function POST(req) {
 
     await connection.end();
 
+    // ✅ Success response
     return new Response(
       JSON.stringify({ success: true, insertedId: result.insertId }),
-      { status: 200 }
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error("API Error:", error);
     return new Response(
       JSON.stringify({ success: false, error: error.message }),
-      { status: 500 }
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 }

@@ -1,24 +1,45 @@
+import mysql from "mysql2/promise";
+
 export async function POST(req) {
   try {
-    const body = await req.json();
+    const body = await req.json(); // Parse JSON body
 
-    // Forward request to your PHP backend on cPanel
-    const response = await fetch("https://motiparadise.fabthefamily.com/api/form.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+    const { name, email, mobile, checkin, checkout, adults, children } = body;
+
+    // Validate required fields
+    if (!name || !email || !mobile || !checkin || !checkout) {
+      return new Response(
+        JSON.stringify({ success: false, error: "Missing required fields" }),
+        { status: 400 }
+      );
+    }
+
+    // DB connection
+    const connection = await mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
     });
 
-    const data = await response.json();
+    // Insert query
+    const [result] = await connection.execute(
+      `INSERT INTO bookings (name, email, mobile, checkin, checkout, adults, children)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [name, email, mobile, checkin, checkout, adults || 0, children || 0]
+    );
 
-    return new Response(JSON.stringify(data), {
-      status: response.ok ? 200 : 400,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (err) {
+    await connection.end();
+
     return new Response(
-      JSON.stringify({ success: false, error: err.message }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+      JSON.stringify({ success: true, insertedId: result.insertId }),
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("API Error:", error);
+    return new Response(
+      JSON.stringify({ success: false, error: error.message }),
+      { status: 500 }
     );
   }
 }

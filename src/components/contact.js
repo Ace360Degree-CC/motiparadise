@@ -245,13 +245,28 @@ export default function Contcat() {
       </div>
 
       <style jsx>{`
-        .aos { opacity: 0; transform: translateY(20px); transition: all 0.7s ease; }
-        .aos-in { opacity: 1; transform: translateY(0); }
-        .animate-bg-pan { animation: bg-pan 20s ease-in-out infinite; }
+        .aos {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.7s ease;
+        }
+        .aos-in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .animate-bg-pan {
+          animation: bg-pan 20s ease-in-out infinite;
+        }
         @keyframes bg-pan {
-          0% { background-position: 50% 50%; }
-          50% { background-position: 55% 52%; }
-          100% { background-position: 50% 50%; }
+          0% {
+            background-position: 50% 50%;
+          }
+          50% {
+            background-position: 55% 52%;
+          }
+          100% {
+            background-position: 50% 50%;
+          }
         }
       `}</style>
     </section>

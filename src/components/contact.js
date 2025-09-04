@@ -38,7 +38,7 @@ export default function Contcat() {
     data.children = children;
 
     try {
-      const res = await fetch("https://motiparadise.fabthefamily.com/api/form.php", {
+      const res = await fetch("/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

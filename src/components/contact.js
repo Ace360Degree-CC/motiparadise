@@ -60,7 +60,7 @@ if (res.ok && result.success) {
 } else {
   Swal.fire({
     title: "Error",
-    text: result.error || "Something went wrong",   // ✅ shows actual error
+    text: result.error || "Something went wrong",   
     icon: "error",
     confirmButtonText: "OK",
     background: "#fff",

@@ -61,6 +61,7 @@ export default function Footer() {
               <Link href="tel:+918905279300" className="inline-flex justify-center">
                 <PhoneIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
+              
             </div>
           </div>
 

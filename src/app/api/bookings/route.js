@@ -4,7 +4,6 @@ import { collection, addDoc } from "firebase/firestore";
 export async function POST(req) {
   try {
     const body = await req.json();
-
     const { name, email, mobile, checkin, checkout, adults, children } = body;
 
     if (!name || !email || !mobile || !checkin || !checkout) {
@@ -14,7 +13,6 @@ export async function POST(req) {
       );
     }
 
-    // Save to Firestore
     await addDoc(collection(db, "bookings"), {
       name,
       email,
@@ -30,10 +28,10 @@ export async function POST(req) {
       JSON.stringify({ success: true, message: "Booking saved successfully" }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
-  } catch (error) {
-    console.error("❌ Firestore Error:", error);
+  } catch (err) {
+    console.error("❌ Firestore Error:", err);
     return new Response(
-      JSON.stringify({ success: false, error: error.message }),
+      JSON.stringify({ success: false, error: err.message }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }

@@ -4,18 +4,18 @@ const nodemailer = require("nodemailer");
 
 admin.initializeApp();
 
-// Configure mail transporter
+// Configure mail transporter (cPanel SMTP)
 const transporter = nodemailer.createTransport({
-  host: "mail.fabthefamily.com",
-  port: 587,
-  secure: false, // true for 465
+  host: "mail.fabthefamily.com", // check cPanel > Connect Devices to confirm
+  port: 587,                     // use 465 with secure: true if SSL is required
+  secure: false,                  // true for 465 (SSL), false for 587 (TLS)
   auth: {
-    user: "customercare@a360pl.com",
-    pass: "YOUR_EMAIL_PASSWORD", // replace with real SMTP password
+    user: "bookings@motiparadise.fabthefamily.com",
+    pass: "YOUR_EMAIL_PASSWORD", // replace with your cPanel email password
   },
 });
 
-// Trigger when a new booking is added
+// Trigger when a new booking is added in Firestore
 exports.sendBookingEmail = functions.firestore
   .document("bookings/{bookingId}")
   .onCreate(async (snap, context) => {
@@ -23,8 +23,8 @@ exports.sendBookingEmail = functions.firestore
 
     // Email to admin
     const adminMail = {
-      from: '"Moti Paradise" <customercare@a360pl.com>',
-      to: "customercare@a360pl.com",
+      from: '"Moti Paradise" <bookings@motiparadise.fabthefamily.com>',
+      to: "bookings@motiparadise.fabthefamily.com",
       subject: `📩 New Booking from ${booking.name}`,
       html: `
         <h2>New Booking Details</h2>
@@ -40,7 +40,7 @@ exports.sendBookingEmail = functions.firestore
 
     // Confirmation email to customer
     const customerMail = {
-      from: '"Moti Paradise" <customercare@a360pl.com>',
+      from: '"Moti Paradise" <bookings@motiparadise.fabthefamily.com>',
       to: booking.email,
       subject: "✅ Booking Confirmation - Moti Paradise",
       html: `
@@ -60,6 +60,6 @@ exports.sendBookingEmail = functions.firestore
       await transporter.sendMail(customerMail);
       console.log("✅ Emails sent to admin and customer");
     } catch (error) {
-      console.error("❌ Email sending error:", error);
+      console.error("❌ Email sending error:", error.message, error);
     }
   });

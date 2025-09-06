@@ -7,11 +7,11 @@ admin.initializeApp();
 // Configure mail transporter (cPanel SMTP)
 const transporter = nodemailer.createTransport({
   host: "mail.fabthefamily.com", // check cPanel > Connect Devices to confirm
-  port: 587,                     // use 465 with secure: true if SSL is required
+  port: 465,                     // use 465 with secure: true if SSL is required
   secure: false,                  // true for 465 (SSL), false for 587 (TLS)
   auth: {
     user: "bookings@motiparadise.fabthefamily.com",
-    pass: "YOUR_EMAIL_PASSWORD", // replace with your cPanel email password
+    pass: "Fab@123#@!", // replace with your cPanel email password
   },
 });
 

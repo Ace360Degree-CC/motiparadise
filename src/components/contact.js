@@ -3,6 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
+// PHP API endpoint (change if you deploy elsewhere)
+const API_URL =
+  process.env.NEXT_PUBLIC_CONTACT_API ||
+  "http://localhost/motiparadise-api/contact.php";
+
 export default function Contcat() {
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
@@ -38,7 +43,7 @@ export default function Contcat() {
     data.children = children;
 
     try {
-      const res = await fetch("/api/bookings", {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -46,28 +51,28 @@ export default function Contcat() {
 
       const result = await res.json();
 
-if (res.ok && result.success) {
-  Swal.fire({
-    title: "Success!",
-    text: "Booking submitted successfully!",
-    icon: "success",
-    confirmButtonText: "OK",
-    background: "#fff",
-    color: "#000",
-    confirmButtonColor: "#6E8628",
-  });
-  e.target.reset();
-} else {
-  Swal.fire({
-    title: "Error",
-    text: result.error || "Something went wrong",   
-    icon: "error",
-    confirmButtonText: "OK",
-    background: "#fff",
-    color: "#000",
-    confirmButtonColor: "#6E8628",
-  });
-}
+      if (res.ok && result.success) {
+        Swal.fire({
+          title: "Success!",
+          text: "Booking submitted successfully!",
+          icon: "success",
+          confirmButtonText: "OK",
+          background: "#fff",
+          color: "#000",
+          confirmButtonColor: "#6E8628",
+        });
+        e.target.reset();
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: result.error || "Something went wrong",
+          icon: "error",
+          confirmButtonText: "OK",
+          background: "#fff",
+          color: "#000",
+          confirmButtonColor: "#6E8628",
+        });
+      }
     } catch (err) {
       console.error("❌ Submit failed:", err);
       Swal.fire({
@@ -150,7 +155,7 @@ if (res.ok && result.success) {
                 </label>
                 <input
                   type="tel"
-                  name="mobile"
+                  name="phone"
                   required
                   className="w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]"
                 />

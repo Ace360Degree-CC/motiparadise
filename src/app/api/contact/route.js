@@ -1,6 +1,6 @@
 // src/app/api/contact/route.js
 export async function OPTIONS() {
-  // Let browser preflight succeed (same-origin with your Next app)
+  // Let browser preflight to YOUR Next API succeed (same-origin)
   return new Response(null, { status: 204 });
 }
 
@@ -8,16 +8,18 @@ export async function POST(req) {
   try {
     const payload = await req.json();
 
-    // Server-to-server call to your PHP API (no browser CORS involved)
     const res = await fetch(process.env.CONTACT_API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      // IMPORTANT: Do not send an Origin header; Node fetch doesn’t by default.
+      headers: {
+        "Content-Type": "application/json",
+        // Optional: some WAFs behave nicer with a browser-like UA
+        "User-Agent": "Mozilla/5.0",
+      },
       body: JSON.stringify(payload),
+      // no Origin header from server -> no WAF JS challenge on preflight
     });
 
-    const text = await res.text(); // pass through whatever PHP returns
-    // Assume PHP returns JSON
+    const text = await res.text();
     return new Response(text, {
       status: res.status,
       headers: { "Content-Type": "application/json" },

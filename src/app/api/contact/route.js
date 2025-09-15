@@ -12,13 +12,13 @@ export async function POST(req) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Optional: some WAFs behave nicer with a browser-like UA
         "User-Agent": "Mozilla/5.0",
+        Accept: "application/json, text/plain, */*",
+        Referer: "https://moti.samvriddhi.com/",
+        "Accept-Language": "en-US,en;q=0.9",
       },
       body: JSON.stringify(payload),
-      // no Origin header from server -> no WAF JS challenge on preflight
     });
-
     const text = await res.text();
     return new Response(text, {
       status: res.status,

@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-// PHP API endpoint (change if you deploy elsewhere)
+// Point this env var to your PHP endpoint in production:
+// NEXT_PUBLIC_CONTACT_API=https://fabthefamily.com/motiparadise-api/contact.php
 const API_URL = process.env.NEXT_PUBLIC_CONTACT_API || "/api/contact";
 
 export default function Contcat() {
@@ -34,22 +35,34 @@ export default function Contcat() {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData.entries());
-
-    data.adults = adults;
-    data.children = children;
-
     try {
+      // Build a simple (no-preflight) body
+      const fd = new FormData(e.target);
+      fd.set("adults", String(adults));
+      fd.set("children", String(children));
+
+      // Convert to x-www-form-urlencoded
+      const body = new URLSearchParams([...fd.entries()]).toString();
+
       const res = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          // IMPORTANT: keep this exact header; do not add custom headers
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body,
       });
 
-      const result = await res.json();
+      // Try JSON first; fall back to raw text
+      const raw = await res.text();
+      let result;
+      try {
+        result = JSON.parse(raw);
+      } catch {
+        result = { success: false, error: raw || "Unexpected response" };
+      }
 
-      if (res.ok && result.success) {
+      if (res.ok && result?.success) {
         Swal.fire({
           title: "Success!",
           text: "Booking submitted successfully!",
@@ -60,10 +73,12 @@ export default function Contcat() {
           confirmButtonColor: "#6E8628",
         });
         e.target.reset();
+        setAdults(0);
+        setChildren(0);
       } else {
         Swal.fire({
           title: "Error",
-          text: result.error || "Something went wrong",
+          text: result?.error || `Request failed (${res.status})`,
           icon: "error",
           confirmButtonText: "OK",
           background: "#fff",

@@ -12,9 +12,18 @@ export default function Contcat() {
   const [loading, setLoading] = useState(false);
 
   // Validation states
+  const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState({ phone: "", email: "" });
+  const [checkin, setCheckin] = useState("");
+  const [checkout, setCheckout] = useState("");
+
+  const [errors, setErrors] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    dates: "",
+  });
 
   const sectionRef = useRef(null);
 
@@ -39,6 +48,12 @@ export default function Contcat() {
   }, []);
 
   // Validation helpers
+  const validateName = (value) => {
+    if (!/^[a-zA-Z\s]+$/.test(value)) return "Name must contain only letters";
+    if (value.length < 2) return "Name is too short";
+    return "";
+  };
+
   const validatePhone = (value) => {
     if (!/^\d{0,10}$/.test(value))
       return "Only numbers allowed (max 10 digits)";
@@ -52,15 +67,30 @@ export default function Contcat() {
     return "";
   };
 
+  const validateDates = (cin, cout) => {
+    if (!cin || !cout) return "";
+    if (new Date(cin) < new Date()) return "Check-in cannot be in the past";
+    if (new Date(cout) <= new Date(cin))
+      return "Checkout must be after check-in";
+    return "";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Final validation before submit
+    const nameError = validateName(name);
     const phoneError = validatePhone(phone);
     const emailError = validateEmail(email);
+    const dateError = validateDates(checkin, checkout);
 
-    if (phoneError || emailError) {
-      setErrors({ phone: phoneError, email: emailError });
+    if (nameError || phoneError || emailError || dateError) {
+      setErrors({
+        name: nameError,
+        phone: phoneError,
+        email: emailError,
+        dates: dateError,
+      });
       return;
     }
 
@@ -91,9 +121,12 @@ export default function Contcat() {
           confirmButtonColor: "#6E8628",
         });
         e.target.reset();
+        setName("");
         setPhone("");
         setEmail("");
-        setErrors({ phone: "", email: "" });
+        setCheckin("");
+        setCheckout("");
+        setErrors({ name: "", phone: "", email: "", dates: "" });
       } else {
         Swal.fire({
           title: "Error",
@@ -162,9 +195,22 @@ export default function Contcat() {
                 <input
                   type="text"
                   name="name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setErrors((prev) => ({
+                      ...prev,
+                      name: validateName(e.target.value),
+                    }));
+                  }}
                   required
-                  className="w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]"
+                  className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628] ${
+                    errors.name ? "border border-red-500" : ""
+                  }`}
                 />
+                {errors.name && (
+                  <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                )}
               </div>
 
               {/* Email */}
@@ -227,8 +273,16 @@ export default function Contcat() {
                 <input
                   type="date"
                   name="checkin"
+                  value={checkin}
+                  onChange={(e) => {
+                    setCheckin(e.target.value);
+                    setErrors((prev) => ({
+                      ...prev,
+                      dates: validateDates(e.target.value, checkout),
+                    }));
+                  }}
                   required
-                  className="w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628] [color-scheme:light]"
+                  className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]`}
                 />
               </div>
 
@@ -240,30 +294,41 @@ export default function Contcat() {
                 <input
                   type="date"
                   name="checkout"
+                  value={checkout}
+                  onChange={(e) => {
+                    setCheckout(e.target.value);
+                    setErrors((prev) => ({
+                      ...prev,
+                      dates: validateDates(checkin, e.target.value),
+                    }));
+                  }}
                   required
-                  className="w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628] [color-scheme:light]"
+                  className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]`}
                 />
+                {errors.dates && (
+                  <p className="text-red-500 text-xs mt-1">{errors.dates}</p>
+                )}
               </div>
+            </div>
 
-              {/* Guests */}
-              <div className="md:col-span-2 aos aos-stagger">
-                <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
-                  Guests:
-                </label>
-                <div className="flex flex-col md:flex-row md:justify-between gap-4 bg-white text-black px-4 py-3 rounded">
-                  <Counter
-                    label="Adults"
-                    value={adults}
-                    onDec={() => bump(setAdults, -1)}
-                    onInc={() => bump(setAdults, 1)}
-                  />
-                  <Counter
-                    label="Child"
-                    value={children}
-                    onDec={() => bump(setChildren, -1)}
-                    onInc={() => bump(setChildren, 1)}
-                  />
-                </div>
+            {/* Guests */}
+            <div className="md:col-span-2 aos aos-stagger mt-4">
+              <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
+                Guests:
+              </label>
+              <div className="flex flex-col md:flex-row md:justify-between gap-4 bg-white text-black px-4 py-3 rounded">
+                <Counter
+                  label="Adults"
+                  value={adults}
+                  onDec={() => bump(setAdults, -1)}
+                  onInc={() => bump(setAdults, 1)}
+                />
+                <Counter
+                  label="Child"
+                  value={children}
+                  onDec={() => bump(setChildren, -1)}
+                  onInc={() => bump(setChildren, 1)}
+                />
               </div>
             </div>
 
@@ -306,32 +371,6 @@ export default function Contcat() {
           </form>
         </div>
       </div>
-
-      <style jsx>{`
-        .aos {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.7s ease;
-        }
-        .aos-in {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .animate-bg-pan {
-          animation: bg-pan 20s ease-in-out infinite;
-        }
-        @keyframes bg-pan {
-          0% {
-            background-position: 50% 50%;
-          }
-          50% {
-            background-position: 55% 52%;
-          }
-          100% {
-            background-position: 50% 50%;
-          }
-        }
-      `}</style>
     </section>
   );
 }

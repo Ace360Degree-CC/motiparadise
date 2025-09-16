@@ -10,6 +10,12 @@ export default function Contcat() {
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
   const [loading, setLoading] = useState(false);
+
+  // Validation states
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState({ phone: "", email: "" });
+
   const sectionRef = useRef(null);
 
   const bump = (setter, delta) => setter((v) => Math.max(0, v + delta));
@@ -32,8 +38,32 @@ export default function Contcat() {
     return () => io.disconnect();
   }, []);
 
+  // Validation helpers
+  const validatePhone = (value) => {
+    if (!/^\d{0,10}$/.test(value))
+      return "Only numbers allowed (max 10 digits)";
+    if (value.length !== 10) return "Phone must be exactly 10 digits";
+    return "";
+  };
+
+  const validateEmail = (value) => {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+      return "Invalid email format";
+    return "";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Final validation before submit
+    const phoneError = validatePhone(phone);
+    const emailError = validateEmail(email);
+
+    if (phoneError || emailError) {
+      setErrors({ phone: phoneError, email: emailError });
+      return;
+    }
+
     setLoading(true);
 
     const formData = new FormData(e.target);
@@ -61,6 +91,9 @@ export default function Contcat() {
           confirmButtonColor: "#6E8628",
         });
         e.target.reset();
+        setPhone("");
+        setEmail("");
+        setErrors({ phone: "", email: "" });
       } else {
         Swal.fire({
           title: "Error",
@@ -142,9 +175,22 @@ export default function Contcat() {
                 <input
                   type="email"
                   name="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setErrors((prev) => ({
+                      ...prev,
+                      email: validateEmail(e.target.value),
+                    }));
+                  }}
                   required
-                  className="w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]"
+                  className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628] ${
+                    errors.email ? "border border-red-500" : ""
+                  }`}
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+                )}
               </div>
 
               {/* Mobile */}
@@ -155,9 +201,22 @@ export default function Contcat() {
                 <input
                   type="tel"
                   name="phone"
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                    setErrors((prev) => ({
+                      ...prev,
+                      phone: validatePhone(e.target.value),
+                    }));
+                  }}
                   required
-                  className="w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]"
+                  className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628] ${
+                    errors.phone ? "border border-red-500" : ""
+                  }`}
                 />
+                {errors.phone && (
+                  <p className="text-red-500 text-xs mt-1">{errors.phone}</p>
+                )}
               </div>
 
               {/* Check-in */}

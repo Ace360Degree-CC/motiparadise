@@ -1,9 +1,3 @@
-// src/app/api/contact/route.js
-export async function OPTIONS() {
-  // Let browser preflight to YOUR Next API succeed (same-origin)
-  return new Response(null, { status: 204 });
-}
-
 export async function POST(req) {
   try {
     const payload = await req.json();
@@ -12,15 +6,27 @@ export async function POST(req) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "User-Agent": "Mozilla/5.0",
-        Accept: "application/json, text/plain, */*",
-        Referer: "https://motiparadise.fabthefamily.com/",
-        "Accept-Language": "en-US,en;q=0.9",
       },
       body: JSON.stringify(payload),
     });
-    const text = await res.text();
-    return new Response(text, {
+
+    const contentType = res.headers.get("content-type") || "";
+    const raw = await res.text();
+
+    // If backend didn't return JSON, wrap it safely
+    if (!contentType.includes("application/json")) {
+      console.error("Unexpected backend response:", raw);
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Invalid backend response",
+          raw,
+        }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    return new Response(raw, {
       status: res.status,
       headers: { "Content-Type": "application/json" },
     });

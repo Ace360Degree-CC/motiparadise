@@ -17,12 +17,14 @@ export default function Contcat() {
   const [email, setEmail] = useState("");
   const [checkin, setCheckin] = useState("");
   const [checkout, setCheckout] = useState("");
+  const [message, setMessage] = useState("");
 
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
     email: "",
     dates: "",
+    message: "",
   });
 
   const sectionRef = useRef(null);
@@ -75,6 +77,11 @@ export default function Contcat() {
     return "";
   };
 
+  const validateMessage = (value) => {
+    if (value.length > 300) return "Message cannot exceed 300 characters";
+    return "";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -83,13 +90,15 @@ export default function Contcat() {
     const phoneError = validatePhone(phone);
     const emailError = validateEmail(email);
     const dateError = validateDates(checkin, checkout);
+    const messageError = validateMessage(message);
 
-    if (nameError || phoneError || emailError || dateError) {
+    if (nameError || phoneError || emailError || dateError || messageError) {
       setErrors({
         name: nameError,
         phone: phoneError,
         email: emailError,
         dates: dateError,
+        message: messageError,
       });
       return;
     }
@@ -126,7 +135,8 @@ export default function Contcat() {
         setEmail("");
         setCheckin("");
         setCheckout("");
-        setErrors({ name: "", phone: "", email: "", dates: "" });
+        setMessage("");
+        setErrors({ name: "", phone: "", email: "", dates: "", message: "" });
       } else {
         Swal.fire({
           title: "Error",
@@ -282,7 +292,7 @@ export default function Contcat() {
                     }));
                   }}
                   required
-                  className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]`}
+                  className="w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]"
                 />
               </div>
 
@@ -303,11 +313,41 @@ export default function Contcat() {
                     }));
                   }}
                   required
-                  className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]`}
+                  className="w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628]"
                 />
                 {errors.dates && (
                   <p className="text-red-500 text-xs mt-1">{errors.dates}</p>
                 )}
+              </div>
+
+              {/* Message */}
+              <div className="md:col-span-2 aos aos-stagger">
+                <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
+                  Message (Optional, max 300 chars):
+                </label>
+                <textarea
+                  name="message"
+                  value={message}
+                  onChange={(e) => {
+                    setMessage(e.target.value);
+                    setErrors((prev) => ({
+                      ...prev,
+                      message: validateMessage(e.target.value),
+                    }));
+                  }}
+                  maxLength={300}
+                  rows={4}
+                  className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628] ${
+                    errors.message ? "border border-red-500" : ""
+                  }`}
+                />
+                <div className="flex justify-between text-xs mt-1">
+                  {errors.message ? (
+                    <p className="text-red-500">{errors.message}</p>
+                  ) : (
+                    <p className="text-gray-500">{message.length}/300</p>
+                  )}
+                </div>
               </div>
             </div>
 

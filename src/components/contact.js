@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
-// Point this env var to your PHP endpoint in production:
-// NEXT_PUBLIC_CONTACT_API=https://fabthefamily.com/motiparadise-api/contact.php
+// PHP API endpoint (change if you deploy elsewhere)
 const API_URL = process.env.NEXT_PUBLIC_CONTACT_API || "/api/contact";
 
 export default function Contcat() {
@@ -17,6 +16,7 @@ export default function Contcat() {
 
   useEffect(() => {
     if (!sectionRef.current) return;
+
     const els = sectionRef.current.querySelectorAll(".aos");
     const io = new IntersectionObserver(
       (entries) => {
@@ -27,6 +27,7 @@ export default function Contcat() {
       },
       { threshold: 0.15 }
     );
+
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
@@ -35,34 +36,21 @@ export default function Contcat() {
     e.preventDefault();
     setLoading(true);
 
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    data.adults = adults;
+    data.children = children;
+
     try {
-      // Build a simple (no-preflight) body
-      const fd = new FormData(e.target);
-      fd.set("adults", String(adults));
-      fd.set("children", String(children));
-
-      // Convert to x-www-form-urlencoded
-      const body = new URLSearchParams([...fd.entries()]).toString();
-
       const res = await fetch(API_URL, {
         method: "POST",
-        headers: {
-          // IMPORTANT: keep this exact header; do not add custom headers
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        },
-        body,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
 
-      // Try JSON first; fall back to raw text
-      const raw = await res.text();
-      let result;
-      try {
-        result = JSON.parse(raw);
-      } catch {
-        result = { success: false, error: raw || "Unexpected response" };
-      }
+      const result = await res.json();
 
-      if (res.ok && result?.success) {
+      if (res.ok && result.success) {
         Swal.fire({
           title: "Success!",
           text: "Booking submitted successfully!",
@@ -73,12 +61,10 @@ export default function Contcat() {
           confirmButtonColor: "#6E8628",
         });
         e.target.reset();
-        setAdults(0);
-        setChildren(0);
       } else {
         Swal.fire({
           title: "Error",
-          text: result?.error || `Request failed (${res.status})`,
+          text: result.error || "Something went wrong",
           icon: "error",
           confirmButtonText: "OK",
           background: "#fff",
@@ -119,7 +105,7 @@ export default function Contcat() {
           <div className="aos aos-slide-left bg-[#202020] text-white p-8 md:p-12 shadow-lg h-[700px] flex flex-col justify-center relative z-10">
             <div className="w-14 h-[2px] bg-white/50 mb-6" />
             <p className="aos aos-fade-down font-[Oswald] tracking-widest uppercase text-sm md:text-base mb-6">
-              Connect with us to for your <br /> staycation
+              Connect with us for your <br /> staycation
             </p>
             <h2 className="aos aos-scale-pop font-[Cinzel] text-3xl md:text-4xl lg:text-6xl font-bold leading-tight">
               Book Your Stay!

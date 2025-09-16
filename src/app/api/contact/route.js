@@ -14,7 +14,7 @@ export async function POST(req) {
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0",
         Accept: "application/json, text/plain, */*",
-        Referer: "https://moti.samvriddhi.com/",
+        Referer: "https://motiparadise.fabthefamily.com/",
         "Accept-Language": "en-US,en;q=0.9",
       },
       body: JSON.stringify(payload),

@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 // PHP API endpoint (change if you deploy elsewhere)
-const API_URL = process.env.NEXT_PUBLIC_CONTACT_API || "/api/contact";
+const API_URL = "/api/contact";
 
 export default function Contcat() {
   const [adults, setAdults] = useState(0);

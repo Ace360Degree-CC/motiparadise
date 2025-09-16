@@ -345,7 +345,7 @@ export default function Contcat() {
                   {errors.message ? (
                     <p className="text-red-500">{errors.message}</p>
                   ) : (
-                    <p className="text-gray-500">{message.length}/300</p>
+                    <p className="text-black">{message.length}/300</p>
                   )}
                 </div>
               </div>

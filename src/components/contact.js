@@ -11,7 +11,7 @@ export default function Contcat() {
   const [children, setChildren] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // Validation states
+  // Form states
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -19,6 +19,7 @@ export default function Contcat() {
   const [checkout, setCheckout] = useState("");
   const [message, setMessage] = useState("");
 
+  // Errors
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
@@ -33,7 +34,6 @@ export default function Contcat() {
 
   useEffect(() => {
     if (!sectionRef.current) return;
-
     const els = sectionRef.current.querySelectorAll(".aos");
     const io = new IntersectionObserver(
       (entries) => {
@@ -44,7 +44,6 @@ export default function Contcat() {
       },
       { threshold: 0.15 }
     );
-
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
@@ -57,21 +56,23 @@ export default function Contcat() {
   };
 
   const validatePhone = (value) => {
-    if (!/^\d{0,10}$/.test(value))
-      return "Only numbers allowed (max 10 digits)";
-    if (value.length !== 10) return "Phone must be exactly 10 digits";
+    if (value.length < 10) return "Phone must be exactly 10 digits";
     return "";
   };
 
   const validateEmail = (value) => {
+    if (!value.includes("@")) return "Email must include '@'";
+    if (value.split("@").length > 2) return "Email has too many '@' symbols";
+    if (!value.includes(".")) return "Email must include a domain (e.g., .com)";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
-      return "Invalid email format";
+      return "Invalid email format (e.g., user@example.com)";
     return "";
   };
 
   const validateDates = (cin, cout) => {
     if (!cin || !cout) return "";
-    if (new Date(cin) < new Date()) return "Check-in cannot be in the past";
+    if (new Date(cin) < new Date().setHours(0, 0, 0, 0))
+      return "Check-in cannot be in the past";
     if (new Date(cout) <= new Date(cin))
       return "Checkout must be after check-in";
     return "";
@@ -259,13 +260,17 @@ export default function Contcat() {
                   name="phone"
                   value={phone}
                   onChange={(e) => {
-                    setPhone(e.target.value);
-                    setErrors((prev) => ({
-                      ...prev,
-                      phone: validatePhone(e.target.value),
-                    }));
+                    const val = e.target.value.replace(/\D/g, "");
+                    if (val.length <= 10) {
+                      setPhone(val);
+                      setErrors((prev) => ({
+                        ...prev,
+                        phone: validatePhone(val),
+                      }));
+                    }
                   }}
                   required
+                  maxLength={10}
                   className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628] ${
                     errors.phone ? "border border-red-500" : ""
                   }`}
@@ -345,7 +350,7 @@ export default function Contcat() {
                   {errors.message ? (
                     <p className="text-red-500">{errors.message}</p>
                   ) : (
-                    <p className="text-black">{message.length}/300</p>
+                    <p className="text-gray-500">{message.length}/300</p>
                   )}
                 </div>
               </div>

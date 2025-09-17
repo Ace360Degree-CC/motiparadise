@@ -324,36 +324,6 @@ export default function Contcat() {
                   <p className="text-red-500 text-xs mt-1">{errors.dates}</p>
                 )}
               </div>
-
-              {/* Message */}
-              <div className="md:col-span-2 aos aos-stagger">
-                <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
-                  Message (Optional, max 300 chars):
-                </label>
-                <textarea
-                  name="message"
-                  value={message}
-                  onChange={(e) => {
-                    setMessage(e.target.value);
-                    setErrors((prev) => ({
-                      ...prev,
-                      message: validateMessage(e.target.value),
-                    }));
-                  }}
-                  maxLength={300}
-                  rows={4}
-                  className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628] ${
-                    errors.message ? "border border-red-500" : ""
-                  }`}
-                />
-                <div className="flex justify-between text-xs mt-1">
-                  {errors.message ? (
-                    <p className="text-red-500">{errors.message}</p>
-                  ) : (
-                    <p className="text-gray-500">{message.length}/300</p>
-                  )}
-                </div>
-              </div>
             </div>
 
             {/* Guests */}
@@ -374,6 +344,36 @@ export default function Contcat() {
                   onDec={() => bump(setChildren, -1)}
                   onInc={() => bump(setChildren, 1)}
                 />
+              </div>
+            </div>
+
+            {/* Message (moved after Guests) */}
+            <div className="md:col-span-2 aos aos-stagger mt-4">
+              <label className="block font-[Oswald] text-xs tracking-widest uppercase text-black mb-2">
+                Message (Optional, max 300 chars):
+              </label>
+              <textarea
+                name="message"
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                  setErrors((prev) => ({
+                    ...prev,
+                    message: validateMessage(e.target.value),
+                  }));
+                }}
+                maxLength={300}
+                rows={4}
+                className={`w-full bg-white text-black px-4 py-3 outline-none focus:ring-2 ring-offset-2 ring-[#6E8628] ${
+                  errors.message ? "border border-red-500" : ""
+                }`}
+              />
+              <div className="flex justify-between text-xs mt-1">
+                {errors.message ? (
+                  <p className="text-red-500">{errors.message}</p>
+                ) : (
+                  <p className="text-black">{message.length}/300</p>
+                )}
               </div>
             </div>
 

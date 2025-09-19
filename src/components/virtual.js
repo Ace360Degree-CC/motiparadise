@@ -33,11 +33,10 @@ export default function Virtual() {
       className="bg-[#202020] py-16 sm:py-20 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-        
         {/* Image (on top in mobile, right side in desktop) */}
         <div className="relative order-1 md:order-2 md:col-span-8">
           <Image
-            src="/vr-tour.png"
+            src="/1vr-tour.png"
             alt="Villa Tour"
             width={1200}
             height={700}

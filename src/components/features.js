@@ -42,7 +42,6 @@ export default function Features() {
       style={{ backgroundImage: "url('/background.png')" }}
     >
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-stretch relative">
-        
         {/* Left: black panel */}
         <div
           className="bg-[#202020] text-white p-8 md:p-10 flex flex-col relative 
@@ -112,12 +111,14 @@ export default function Features() {
 
         {/* Right: feature image (desktop only) */}
         <div
-          className={`relative hidden md:flex items-center justify-center ${inView ? "animate-zoomOut" : hidden}`}
+          className={`relative hidden md:flex items-center justify-center ${
+            inView ? "animate-zoomOut" : hidden
+          }`}
           style={{ animationDelay: "0.25s" }}
         >
           <div className="w-[90%] shadow-lg">
             <Image
-              src="/exclusive.png"
+              src="/1exclusive.png"
               alt="Exclusive villa feature"
               width={1200}
               height={800}

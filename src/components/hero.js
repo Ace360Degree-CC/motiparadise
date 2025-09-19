@@ -2,13 +2,34 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Contcat from "@/components/contact"; // your booking form component
 
 export default function Hero() {
   const heroRef = useRef(null);
-  const [showForm, setShowForm] = useState(false); // mounted or not
-  const [closing, setClosing] = useState(false);   // drive reverse animation
+  const [showForm, setShowForm] = useState(false);
+  const [closing, setClosing] = useState(false);
 
+  // Slider state
+  const images = ["/2hero.png", "/3hero.png", "/4hero.png"];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Auto slide (run once)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  // Animations observer (keep original)
   useEffect(() => {
     const root = heroRef.current;
     if (!root) return;
@@ -37,14 +58,12 @@ export default function Hero() {
     return () => io.disconnect();
   }, []);
 
+  // Modal functions
   const openModal = () => {
     setShowForm(true);
     setClosing(false);
   };
-
-  const startClose = () => {
-    setClosing(true); // play reverse animation; unmount happens on animationend
-  };
+  const startClose = () => setClosing(true);
 
   // Close on ESC
   useEffect(() => {
@@ -56,20 +75,44 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} className="relative w-full overflow-hidden">
-      {/* Hero Image */}
-      <div
-        data-animate="animate-zoomOut"
-        className="relative w-full h-[500px] sm:h-auto opacity-0"
-      >
-        <Image
-          src="/hero2.png"
-          alt="Moti Paradise Villa"
-          width={1920}
-          height={800}
-          priority
-          className="w-full h-[500px] object-cover sm:h-auto sm:object-fill"
-        />
-        <div className="absolute inset-0 bg-black/60"></div>
+      {/* Slider */}
+      <div className="relative w-full h-[700px] overflow-hidden">
+        <div
+          className="flex transition-transform duration-1000 ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {images.map((src, idx) => (
+            <div
+              key={idx}
+              className="relative flex-shrink-0 w-full h-[700px] sm:h-[400px] md:h-[600px] lg:h-[700px]"
+            >
+              <Image
+                src={src}
+                alt={`Slide ${idx + 1}`}
+                fill
+                priority={idx === 0}
+                className="object-cover w-full h-full"
+              />
+              <div className="absolute inset-0 bg-black/50"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Left arrow */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white p-3 rounded-full transition"
+        >
+          <ChevronLeft size={28} />
+        </button>
+
+        {/* Right arrow */}
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white p-3 rounded-full transition"
+        >
+          <ChevronRight size={28} />
+        </button>
       </div>
 
       {/* Content */}
@@ -77,7 +120,10 @@ export default function Hero() {
         data-animate="animate-fadeIn"
         className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 opacity-0"
       >
-        <div data-animate="animate-bounce" className="relative mb-2 -mt-[20px] opacity-0">
+        <div
+          data-animate="animate-bounce"
+          className="relative mb-2 -mt-[20px] opacity-0"
+        >
           <Image
             src="/smile.png"
             alt="Smiles Guaranteed"
@@ -110,35 +156,33 @@ export default function Hero() {
         </button>
       </div>
 
-      {/* Modal with true reverse animation */}
+      {/* Modal */}
       {showForm && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center p-4
-                      ${closing ? "backdrop-out" : "backdrop-in"}`}
-          onClick={startClose} // close by clicking outside
+          className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${
+            closing ? "backdrop-out" : "backdrop-in"
+          }`}
+          onClick={startClose}
         >
           <div
-            className={`relative bg-white w-full max-w-4xl rounded-lg shadow-xl
-                        modal-base ${closing ? "modal-out" : "modal-in"}`}
-            style={{ maxHeight: "90vh", overflow: "hidden" }} // ✅ no scrollbar inside popup
-            onClick={(e) => e.stopPropagation()} // avoid closing when clicking inside
+            className={`relative bg-white w-full max-w-4xl rounded-lg shadow-xl modal-base ${
+              closing ? "modal-out" : "modal-in"
+            }`}
+            style={{ maxHeight: "90vh", overflow: "hidden" }}
+            onClick={(e) => e.stopPropagation()}
             onAnimationEnd={(e) => {
-              // Only unmount when our modal-out animation finishes
               if (closing && e.animationName === "modalOut") {
                 setShowForm(false);
                 setClosing(false);
               }
             }}
           >
-            {/* Close Button (white, hover red) */}
             <button
               onClick={startClose}
               className="absolute top-3 right-3 text-white text-3xl font-bold z-50 hover:text-red-500 transition"
             >
               ✕
             </button>
-
-            {/* Booking Form */}
             <Contcat />
           </div>
         </div>
@@ -146,7 +190,6 @@ export default function Hero() {
 
       {/* Modal animations */}
       <style jsx>{`
-        /* Backdrop */
         .backdrop-in {
           animation: backdropIn 300ms ease forwards;
         }
@@ -154,26 +197,53 @@ export default function Hero() {
           animation: backdropOut 300ms ease forwards;
         }
         @keyframes backdropIn {
-          from { opacity: 0; background-color: rgba(0,0,0,0.0); }
-          to   { opacity: 1; background-color: rgba(0,0,0,0.7); }
+          from {
+            opacity: 0;
+            background-color: rgba(0, 0, 0, 0);
+          }
+          to {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.7);
+          }
         }
         @keyframes backdropOut {
-          from { opacity: 1; background-color: rgba(0,0,0,0.7); }
-          to   { opacity: 0; background-color: rgba(0,0,0,0.0); }
+          from {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.7);
+          }
+          to {
+            opacity: 0;
+            background-color: rgba(0, 0, 0, 0);
+          }
         }
-
-        /* Modal panel */
-        .modal-base { will-change: transform, opacity; }
-        .modal-in   { animation: modalIn 300ms cubic-bezier(.2,.7,.3,1) forwards; }
-        .modal-out  { animation: modalOut 300ms cubic-bezier(.4,.2,.2,1) forwards; }
-
+        .modal-base {
+          will-change: transform, opacity;
+        }
+        .modal-in {
+          animation: modalIn 300ms cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+        }
+        .modal-out {
+          animation: modalOut 300ms cubic-bezier(0.4, 0.2, 0.2, 1) forwards;
+        }
         @keyframes modalIn {
-          from { opacity: 0; transform: scale(0.96); }
-          to   { opacity: 1; transform: scale(1); }
+          from {
+            opacity: 0;
+            transform: scale(0.96);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
         }
         @keyframes modalOut {
-          from { opacity: 1; transform: scale(1); }
-          to   { opacity: 0; transform: scale(0.96); }
+          from {
+            opacity: 1;
+            transform: scale(1);
+          }
+          to {
+            opacity: 0;
+            transform: scale(0.96);
+          }
         }
       `}</style>
     </section>

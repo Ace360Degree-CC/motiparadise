@@ -1,51 +1,51 @@
-"use client"
-import Image from "next/image"
-import Link from "next/link"
-import { useState, useEffect } from "react"
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
-  const [active, setActive] = useState("")
-  const [loaded, setLoaded] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [active, setActive] = useState("");
+  const [loaded, setLoaded] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const menuItems = [
-    { href: "#about", label: "About Us" },
-    { href: "#gallery", label: "Gallery" },
-    { href: "#features", label: "Features" },
-    { href: "#location", label: "Location Advantage" },
-    { href: "#tour", label: "Virtual Tour" },
-    { href: "#guest", label: "Testimonials" },
-    { href: "#contact", label: "Contact" },
-  ]
+    { href: "/#about", label: "About Us" },
+    { href: "/#gallery", label: "Gallery" },
+    { href: "/#features", label: "Features" },
+    { href: "/#location", label: "Location Advantage" },
+    { href: "/#tour", label: "Virtual Tour" },
+    { href: "/#guest", label: "Testimonials" },
+    { href: "/#contact", label: "Contact" },
+  ];
 
   useEffect(() => {
-    setLoaded(true)
+    setLoaded(true);
 
     // IntersectionObserver to track active section
-    const sectionIds = menuItems.map((item) => item.href.replace("#", ""))
-    const sections = sectionIds.map((id) => document.getElementById(id))
+    const sectionIds = menuItems.map((item) => item.href.replace("#", ""));
+    const sections = sectionIds.map((id) => document.getElementById(id));
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActive(`#${entry.target.id}`)
+            setActive(`#${entry.target.id}`);
           }
-        })
+        });
       },
       { threshold: 0.6 }
-    )
+    );
 
     sections.forEach((section) => {
-      if (section) observer.observe(section)
-    })
+      if (section) observer.observe(section);
+    });
 
     return () => {
       sections.forEach((section) => {
-        if (section) observer.unobserve(section)
-      })
-    }
-  }, [])
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
 
   return (
     <nav
@@ -92,16 +92,28 @@ export default function Navbar() {
       </ul>
 
       {/* Desktop Button with animation */}
-      <Link
-        href="#contact"
-        className={`hidden md:block border border-[#6E8628] text-[#202020] px-5 py-2 rounded font-oswald text-[18px] lg:text-[20px]
+      <div className="flex gap-6">
+        <Link
+          href="/blogs"
+          className={`hidden md:block border border-[#6E8628] bg-[#6E8628] text-white px-5 py-2 rounded font-oswald text-[18px] lg:text-[20px]
+          transition-all duration-200 hover:bg-white hover:text-black
+          ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
+           hover:scale-105`}
+          style={{ transitionDelay: `${menuItems.length * 150}ms` }}
+        >
+          BLOGS
+        </Link>
+        <Link
+          href="#contact"
+          className={`hidden md:block border border-[#6E8628] text-[#202020] px-5 py-2 rounded font-oswald text-[18px] lg:text-[20px]
           transition-all duration-300 hover:bg-[#6E8628] hover:text-white
           ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
           animate-pulse hover:scale-105`}
-        style={{ transitionDelay: `${menuItems.length * 150}ms` }}
-      >
-        BOOK NOW!
-      </Link>
+          style={{ transitionDelay: `${menuItems.length * 150}ms` }}
+        >
+          BOOK NOW!
+        </Link>
+      </div>
 
       {/* Mobile Hamburger */}
       <button
@@ -128,7 +140,9 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <div
         className={`absolute top-[72px] left-0 w-full bg-white shadow-md md:hidden flex flex-col items-center space-y-6 py-6 font-oswald text-[18px] transition-all duration-500 ease-in-out ${
-          menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+          menuOpen
+            ? "max-h-[500px] opacity-100"
+            : "max-h-0 opacity-0 overflow-hidden"
         }`}
       >
         {menuItems.map((item, index) => (
@@ -136,7 +150,9 @@ export default function Navbar() {
             key={item.href}
             href={item.href}
             className={`transition-all duration-500 ${
-              active === item.href ? "text-[#6E8628] font-semibold" : "text-gray-800"
+              active === item.href
+                ? "text-[#6E8628] font-semibold"
+                : "text-gray-800"
             }`}
             style={{ transitionDelay: `${index * 120}ms` }}
             onClick={() => setMenuOpen(false)}
@@ -157,5 +173,5 @@ export default function Navbar() {
         </Link>
       </div>
     </nav>
-  )
+  );
 }

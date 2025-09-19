@@ -1,0 +1,77 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+
+const Blog = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const res = await fetch(
+          "https://blogs.fabthefamily.com/wp-json/wp/v2/posts?per_page=3&_embed"
+        );
+        const data = await res.json();
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    }
+    fetchPosts();
+  }, []);
+
+  // helper: extract first <img> src from post content
+  const extractFirstImage = (html) => {
+    if (!html) return null;
+    const match = html.match(/<img[^>]+src="([^">]+)"/i);
+    return match ? match[1] : null;
+  };
+
+  return (
+    <div className="w-screen bg-black pb-26 py-20 flex flex-col gap-10">
+      {/* title */}
+      <div className="upper_block max-w-6xl mx-auto px-6 text-center">
+        <p className="text-2xl md:text-3xl font-[Oswald] text-white tracking-wide uppercase animate-slideUp animation-delay">
+          Blogs
+        </p>
+      </div>
+
+      {/* blogs */}
+      <div className="lower_block max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.length > 0 ? (
+          posts.map((post) => {
+            const contentImg = extractFirstImage(post.content?.rendered);
+            const image =
+              contentImg ||
+              post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+              "/gallery1.png";
+
+            return (
+              <Link
+                key={post.id}
+                href={`/blogs/${post.slug}`}
+                className="blog_item group font-[Oswald] hover:shadow-lg transition rounded-lg"
+              >
+                <img
+                  src={image}
+                  className="w-full h-70 object-cover mb-4 rounded"
+                  alt={post.title.rendered}
+                />
+                <p className="text-lg md:text-xl text-white group-hover:text-[#6E8628] tracking-wide uppercase animate-slideUp">
+                  {post.title.rendered}
+                </p>
+                <p className="text-gray-300">
+                  {post.excerpt.rendered.replace(/<[^>]+>/g, "").slice(0, 100)}...
+                </p>
+              </Link>
+            );
+          })
+        ) : (
+          <p className="text-white text-center col-span-3">Loading blogs...</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Blog;

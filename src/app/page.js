@@ -8,6 +8,7 @@ import Virtual from "@/components/virtual"
 import Guest from "@/components/guest"
 import Contcat from "@/components/contact"
 import Footer from "@/components/footer"
+import Blog from "@/components/blog"
 
 export default function Home() {
   return (
@@ -51,6 +52,11 @@ export default function Home() {
       {/* Contact */}
       <section id="contact">
         <Contcat />
+      </section>
+
+      {/* BLOGS */}
+      <section id="blog">
+        <Blog/>
       </section>
 
       <Footer />

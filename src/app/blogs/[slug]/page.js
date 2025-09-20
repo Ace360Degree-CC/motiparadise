@@ -28,43 +28,95 @@ export default async function BlogDetail({ params }) {
     );
   }
 
-  // extract banner image (first <img> in content OR featured image)
-  const match = post.content?.rendered.match(/<img[^>]+src="([^">]+)"/i);
-  const contentImg =
-    (match ? match[1] : null) ||
-    post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-    "/gallery1.png";
+  const acf = post.acf || {};
 
-  // remove the first <img> from content so it doesn't repeat
-  let cleanedContent = post.content?.rendered;
-  if (match) {
-    cleanedContent = cleanedContent.replace(match[0], "");
-  }
+  // extract ALL images from rendered content
+  const imageMatches = [...post.content?.rendered.matchAll(/<img[^>]+src="([^">]+)"/gi)];
+  const images = imageMatches.map((m) => m[1]);
 
   return (
     <div className="bg-white min-h-screen flex flex-col">
       <Navbar />
 
-      <div className="max-w-4xl mx-auto px-6 py-30">
-        {/* Banner */}
-        <div className="w-full aspect-[21/9] mb-6">
-          <img
-            src={contentImg}
-            alt={post.title.rendered}
-            className="w-full h-full object-cover rounded-lg"
-          />
+      <div className="max-w-4xl mx-auto px-6 py-20 space-y-12">
+        {/* Banner Image */}
+        {images[0] && (
+          <div className="w-full aspect-[21/9]">
+            <img
+              src={images[0]}
+              alt={acf.heading || post.title.rendered}
+              className="w-full h-full object-cover rounded-lg"
+            />
+          </div>
+        )}
+
+        {/* Title & Subheading */}
+        <div className="text-center">
+          <h1 className="text-4xl md:text-5xl font-[Cinzel] text-gray-900 mb-4">
+            {acf.heading || post.title.rendered}
+          </h1>
+          {acf.sub_heading && (
+            <p className="text-lg md:text-xl text-gray-600 font-[Oswald]">
+              {acf.sub_heading}
+            </p>
+          )}
         </div>
 
-        {/* Title */}
-        <h1 className="text-3xl font-bold text-gray-900 mb-6 font-[Oswald]">
-          {post.title.rendered}
-        </h1>
+        {/* Content Heading + Description + List */}
+        <div>
+          {acf.content_heading && (
+            <h2 className="text-2xl font-[Oswald] text-gray-900 mb-4">
+              {acf.content_heading}
+            </h2>
+          )}
+          {acf.content_description && (
+            <p className="text-gray-700 font-[Oswald] mb-4">
+              {acf.content_description}
+            </p>
+          )}
+          {acf.list && (
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 font-[Oswald]">
+              {acf.list.split("\n").map(
+                (item, idx) =>
+                  item.trim() && <li key={idx}>{item.replace("•", "").trim()}</li>
+              )}
+            </ul>
+          )}
+        </div>
 
-        {/* Content */}
-        <div
-          className="prose prose-lg text-gray-800 max-w-none"
-          dangerouslySetInnerHTML={{ __html: cleanedContent }}
-        />
+        {/* Extra Image + Mini Title + List Title + List Items */}
+        {images[1] && (
+          <div className="space-y-6">
+            <img
+              src={images[1]}
+              alt="extra"
+              className="w-full h-auto object-cover rounded-lg"
+            />
+            {acf.mini_title && (
+              <h3 className="text-xl font-[Cinzel] text-gray-900">
+                {acf.mini_title}
+              </h3>
+            )}
+            {acf.list_title && (
+              <h4 className="text-lg font-[Oswald] text-gray-800 mt-2">
+                {acf.list_title}
+              </h4>
+            )}
+            {acf.list_items && (
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 font-[Oswald]">
+                {acf.list_items.split("\n").map(
+                  (item, idx) =>
+                    item.trim() && <li key={idx}>{item.replace("•", "").trim()}</li>
+                )}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* Final Paragraph */}
+        {acf.final_paragraph && (
+          <p className="text-gray-700 font-[Oswald]">{acf.final_paragraph}</p>
+        )}
       </div>
 
       <Footer />

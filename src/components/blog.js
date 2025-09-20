@@ -46,6 +46,11 @@ const Blog = () => {
               post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
               "/gallery1.png";
 
+            // Prefer ACF content_description; fallback to excerpt if not available
+            const description =
+              post.acf?.content_description ||
+              post.excerpt?.rendered.replace(/<[^>]+>/g, "").slice(0, 100);
+
             return (
               <Link
                 key={post.id}
@@ -61,7 +66,9 @@ const Blog = () => {
                   {post.title.rendered}
                 </p>
                 <p className="text-gray-300">
-                  {post.excerpt.rendered.replace(/<[^>]+>/g, "").slice(0, 100)}...
+                  {description.length > 120
+                    ? description.slice(0, 120) + "..."
+                    : description}
                 </p>
               </Link>
             );

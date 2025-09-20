@@ -5,7 +5,7 @@ import Footer from "@/components/footer";
 async function getPost(slug) {
   const res = await fetch(
     `https://blogs.fabthefamily.com/wp-json/wp/v2/posts?slug=${slug}&_embed`,
-    { next: { revalidate: 60 } } // ISR: revalidate every 60s
+    { cache: "no-store" } // always fresh data
   );
 
   if (!res.ok) {
@@ -41,7 +41,7 @@ export default async function BlogDetail({ params }) {
       <div className="max-w-4xl mx-auto px-6 py-20 space-y-12">
         {/* Banner Image */}
         {images[0] && (
-          <div className="w-full aspect-[21/9]">
+          <div className="w-full aspect-[21/9] mb-6">
             <img
               src={images[0]}
               alt={acf.heading || post.title.rendered}
@@ -50,7 +50,7 @@ export default async function BlogDetail({ params }) {
           </div>
         )}
 
-        {/* Title & Subheading */}
+        {/* Heading + Subheading */}
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-[Cinzel] text-gray-900 mb-4">
             {acf.heading || post.title.rendered}
@@ -84,12 +84,12 @@ export default async function BlogDetail({ params }) {
           )}
         </div>
 
-        {/* Extra Image + Mini Title + List Title + List Items */}
+        {/* Middle Section with Extra Image + Titles */}
         {images[1] && (
           <div className="space-y-6">
             <img
               src={images[1]}
-              alt="extra"
+              alt="middle"
               className="w-full h-auto object-cover rounded-lg"
             />
             {acf.mini_title && (
@@ -113,9 +113,18 @@ export default async function BlogDetail({ params }) {
           </div>
         )}
 
-        {/* Final Paragraph */}
-        {acf.final_paragraph && (
-          <p className="text-gray-700 font-[Oswald]">{acf.final_paragraph}</p>
+        {/* Final Section with Image + Final Paragraph */}
+        {images[2] && (
+          <div className="space-y-6">
+            <img
+              src={images[2]}
+              alt="final"
+              className="w-full h-auto object-cover rounded-lg"
+            />
+            {acf.final_paragraph && (
+              <p className="text-gray-700 font-[Oswald]">{acf.final_paragraph}</p>
+            )}
+          </div>
         )}
       </div>
 

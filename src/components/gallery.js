@@ -66,7 +66,7 @@ export default function Gallery() {
           style={{ animationDelay: "0.25s" }}
         >
           <Image
-            src="/gallery1.png"
+            src="/1gallery.png"
             alt="Main gallery image"
             fill
             className="object-cover transition duration-500 hover:scale-105"
@@ -76,24 +76,27 @@ export default function Gallery() {
 
         {/* Right 2x2 grid */}
         <div className="grid grid-cols-2 grid-rows-2 gap-6 h-full">
-          {["/gallery2.png", "/gallery3.png", "/gallery4.png", "/gallery5.png"].map(
-            (src, i) => (
-              <div
-                key={i}
-                className={`relative overflow-hidden rounded-lg shadow-md min-h-[150px] md:min-h-0 ${
-                  inView ? "animate-fadeUp" : hidden
-                }`}
-                style={{ animationDelay: `${0.35 + i * 0.12}s` }}
-              >
-                <Image
-                  src={src}
-                  alt={`Gallery image ${i + 2}`}
-                  fill
-                  className="object-cover transition duration-500 hover:scale-105"
-                />
-              </div>
-            )
-          )}
+          {[
+            "/22gallery.png",
+            "/3gallery.png",
+            "/4gallery.png",
+            "/5gallery.png",
+          ].map((src, i) => (
+            <div
+              key={i}
+              className={`relative overflow-hidden rounded-lg shadow-md min-h-[150px] md:min-h-0 ${
+                inView ? "animate-fadeUp" : hidden
+              }`}
+              style={{ animationDelay: `${0.35 + i * 0.12}s` }}
+            >
+              <Image
+                src={src}
+                alt={`Gallery image ${i + 2}`}
+                fill
+                className="object-cover transition duration-500 hover:scale-105"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>

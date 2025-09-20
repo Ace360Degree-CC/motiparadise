@@ -3,17 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-<<<<<<< HEAD
-export default function Navbar() {
-=======
 export default function Navbar({ openModal }) {
->>>>>>> 95684889b11075c2fda8c1d94633cb9fe3bb8b31
   const [active, setActive] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const menuItems = [
-<<<<<<< HEAD
     { href: "/#about", label: "About Us" },
     { href: "/#gallery", label: "Gallery" },
     { href: "/#features", label: "Features" },
@@ -21,20 +16,10 @@ export default function Navbar({ openModal }) {
     { href: "/#tour", label: "Virtual Tour" },
     { href: "/#guest", label: "Testimonials" },
     { href: "/#contact", label: "Contact" },
-=======
-    { href: "#about", label: "About Us" },
-    { href: "#gallery", label: "Gallery" },
-    { href: "#features", label: "Features" },
-    { href: "#location", label: "Location Advantage" },
-    { href: "#tour", label: "Virtual Tour" },
-    { href: "#guest", label: "Testimonials" },
-    { href: "#contact", label: "Contact" },
->>>>>>> 95684889b11075c2fda8c1d94633cb9fe3bb8b31
   ];
 
   useEffect(() => {
     setLoaded(true);
-<<<<<<< HEAD
 
     // IntersectionObserver to track active section
     const sectionIds = menuItems.map((item) => item.href.replace("#", ""));
@@ -46,19 +31,10 @@ export default function Navbar({ openModal }) {
           if (entry.isIntersecting) {
             setActive(`#${entry.target.id}`);
           }
-=======
-    const sectionIds = menuItems.map((item) => item.href.replace("#", ""));
-    const sections = sectionIds.map((id) => document.getElementById(id));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
->>>>>>> 95684889b11075c2fda8c1d94633cb9fe3bb8b31
         });
       },
       { threshold: 0.6 }
     );
-<<<<<<< HEAD
 
     sections.forEach((section) => {
       if (section) observer.observe(section);
@@ -69,11 +45,6 @@ export default function Navbar({ openModal }) {
         if (section) observer.unobserve(section);
       });
     };
-=======
-    sections.forEach((section) => section && observer.observe(section));
-    return () =>
-      sections.forEach((section) => section && observer.unobserve(section));
->>>>>>> 95684889b11075c2fda8c1d94633cb9fe3bb8b31
   }, []);
 
   return (
@@ -120,8 +91,7 @@ export default function Navbar({ openModal }) {
         ))}
       </ul>
 
-<<<<<<< HEAD
-      {/* Desktop Button with animation */}
+      {/* Desktop Buttons */}
       <div className="flex gap-6">
         <Link
           href="/blogs"
@@ -133,30 +103,17 @@ export default function Navbar({ openModal }) {
         >
           BLOGS
         </Link>
-        <Link
-          href="#contact"
-          className={`hidden md:block border border-[#6E8628] text-[#202020] px-5 py-2 rounded font-oswald text-[18px] lg:text-[20px]
-          transition-all duration-300 hover:bg-[#6E8628] hover:text-white
-          ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-          animate-pulse hover:scale-105`}
+        <button
+          onClick={openModal}
+          className={`hidden cursor-pointer md:block border border-[#6E8628] text-[#202020] px-5 py-2 rounded font-oswald text-[18px] lg:text-[20px]
+            transition-all duration-300 hover:bg-[#6E8628] hover:text-white
+            ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
+            animate-pulse hover:scale-105`}
           style={{ transitionDelay: `${menuItems.length * 150}ms` }}
         >
           BOOK NOW!
-        </Link>
+        </button>
       </div>
-=======
-      {/* Desktop BOOK NOW button */}
-      <button
-        onClick={openModal}
-        className={`hidden cursor-pointer md:block border border-[#6E8628] text-[#202020] px-5 py-2 rounded font-oswald text-[18px] lg:text-[20px]
-          transition-all duration-300 hover:bg-[#6E8628] hover:text-white
-          ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
-          animate-pulse hover:scale-105`}
-        style={{ transitionDelay: `${menuItems.length * 150}ms` }}
-      >
-        BOOK NOW!
-      </button>
->>>>>>> 95684889b11075c2fda8c1d94633cb9fe3bb8b31
 
       {/* Mobile Hamburger */}
       <button

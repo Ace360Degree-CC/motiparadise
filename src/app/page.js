@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import Navbar from "@/components/navbar"
-import Hero from "@/components/hero"
-import PrivateEscapeSection from "@/components/escape"
-import Gallery from "@/components/gallery"
-import Features from "@/components/features"
-import Location from "@/components/location"
-import Virtual from "@/components/virtual"
-import Guest from "@/components/guest"
-import Contcat from "@/components/contact"
-import Footer from "@/components/footer"
-import Blog from "@/components/blog"
-=======
 "use client";
 
 import { useState, useEffect } from "react";
@@ -24,7 +11,7 @@ import Virtual from "@/components/virtual";
 import Guest from "@/components/guest";
 import Contcat from "@/components/contact";
 import Footer from "@/components/footer";
->>>>>>> 95684889b11075c2fda8c1d94633cb9fe3bb8b31
+import Blog from "@/components/blog";
 
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
@@ -92,7 +79,7 @@ export default function Home() {
 
       {/* BLOGS */}
       <section id="blog">
-        <Blog/>
+        <Blog />
       </section>
 
       <Footer />

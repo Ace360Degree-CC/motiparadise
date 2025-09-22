@@ -85,7 +85,7 @@ export default function Location() {
               className="mb-6"
             />
             <p className="font-[Oswald] text-[20px] text-[#202020]">
-              Just 11 km from Udaipur City
+              Just 2 km from Udaipur City
             </p>
           </div>
 
@@ -111,7 +111,7 @@ export default function Location() {
               className="mb-6"
             />
             <p className="font-[Oswald] text-[20px] text-[#202020]">
-              25 mins to City Palace, Fateh Sagar Lake & Lake Pichola
+              10 mins to City Palace, Fateh Sagar Lake & Lake Pichola
             </p>
           </div>
 

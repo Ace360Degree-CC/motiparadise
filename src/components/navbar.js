@@ -48,7 +48,7 @@ export default function Navbar({ openModal }) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 md:px-8 lg:px-12 xl:px-20 py-4 shadow-sm bg-white transition-all duration-700 ease-in-out ${
+      className={`fixed overflow-x-clip top-0 left-0 w-full z-50 flex items-center justify-between px-4 md:px-8 lg:px-12 xl:px-20 py-4 shadow-sm bg-white transition-all duration-700 ease-in-out ${
         loaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"
       }`}
     >

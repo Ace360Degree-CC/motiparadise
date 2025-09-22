@@ -28,14 +28,16 @@ const Blog = () => {
   };
 
   return (
-    <div className="w-screen bg-black pb-26 py-16 flex flex-col gap-10">
+    <div className="w-full bg-black pb-26 py-16 flex flex-col gap-10">
       {/* title */}
       <div className="upper_block max-w-6xl mx-auto px-6 flex flex-col gap-4 text-center">
         <p className="text-2xl md:text-3xl font-[Cinzel] font-bold text-white tracking-wide uppercase animate-slideUp animation-delay">
           Our Stories & Insights
         </p>
         <p className="text-lg md:text-lg px-8 font-[Oswald] text-white/80 tracking-wide uppercase animate-slideUp animation-delay">
-          Stay inspired with our latest articles — from travel diaries and lifestyle ideas to unique experiences that define Moti Paradise. Explore what’s new and discover stories worth sharing.
+          Stay inspired with our latest articles — from travel diaries and
+          lifestyle ideas to unique experiences that define Moti Paradise.
+          Explore what’s new and discover stories worth sharing.
         </p>
       </div>
 
@@ -73,12 +75,32 @@ const Blog = () => {
                     ? description.slice(0, 120) + "..."
                     : description}
                 </p>
+                <Link href={`/blogs/${post.slug}`} className="block cursor-pointer mt-4">
+                  <button
+                    className="w-full cursor-pointer bg-[#6E8628] text-black py-2 
+               transform transition duration-300 
+               hover:scale-105 hover:text-white hover:bg-[#88a737]"
+                  >
+                    Continue reading
+                  </button>
+                </Link>
               </Link>
             );
           })
         ) : (
           <p className="text-white text-center col-span-3">Loading blogs...</p>
         )}
+      </div>
+      <div className="w-full flex justify-center">
+        <Link href="/blogs">
+        <button
+          className="px-12  mt-4 bg-[#6E8628] font-[Oswald] text-black py-2 
+             transform transition duration-300 cursor-pointer 
+             hover:scale-101 hover:text-white hover:bg-[#88a737]"
+        >
+          Read More
+        </button>
+        </Link>
       </div>
     </div>
   );

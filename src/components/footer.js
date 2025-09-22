@@ -49,19 +49,30 @@ export default function Footer() {
               ref={iconsRef}
               className="icons-row grid grid-cols-4 gap-6 items-center text-center"
             >
-              <Link href="https://www.facebook.com/profile.php?id=61577629348900" className="inline-flex justify-center">
+              <Link
+                href="https://www.facebook.com/profile.php?id=61577629348900"
+                className="inline-flex justify-center"
+              >
                 <FacebookIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
-              <Link href="https://www.instagram.com/motiparadise_?utm_source=qr&igsh=YjJyZGxuZ3hqbXox" className="inline-flex justify-center">
+              <Link
+                href="https://www.instagram.com/motiparadise_?utm_source=qr&igsh=YjJyZGxuZ3hqbXox"
+                className="inline-flex justify-center"
+              >
                 <InstagramIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
-              <Link href="https://www.youtube.com/@MotiParadise" className="inline-flex justify-center">
+              <Link
+                href="https://www.youtube.com/@MotiParadise"
+                className="inline-flex justify-center"
+              >
                 <YoutubeIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
-              <Link href="tel:+918905279300" className="inline-flex justify-center">
+              <Link
+                href="tel:+918905279300"
+                className="inline-flex justify-center"
+              >
                 <PhoneIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
-              
             </div>
           </div>
 
@@ -91,8 +102,16 @@ export default function Footer() {
       {/* Copyright bar */}
       <div className="mt-10 w-full bg-[#202020] py-4">
         <p className="text-center text-white text-sm tracking-wide font-[Oswald]">
-          Copyright © {new Date().getFullYear()} FAB THE FAMILY All Rights Reserved.{" "}
-          Designed &amp; Maintained by ACE360DEGREE
+          Copyright © {new Date().getFullYear()} FAB THE FAMILY All Rights
+          Reserved. Designed &amp; Marketed by{" "}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://ace360degree.com"
+            className="hover:text-[#6E8628] underline"
+          >
+            ACE360DEGREE
+          </a>
         </p>
       </div>
 
@@ -104,9 +123,7 @@ export default function Footer() {
         .reveal {
           opacity: 0;
           transform: translateY(20px) scale(0.9);
-          transition:
-            opacity 0.6s ease,
-            transform 0.6s ease;
+          transition: opacity 0.6s ease, transform 0.6s ease;
         }
         .reveal.in-view {
           opacity: 1;
@@ -114,16 +131,32 @@ export default function Footer() {
         }
 
         /* stagger for labels */
-        .labels-row .reveal:nth-child(1) { transition-delay: 0ms; }
-        .labels-row .reveal:nth-child(2) { transition-delay: 150ms; }
-        .labels-row .reveal:nth-child(3) { transition-delay: 300ms; }
-        .labels-row .reveal:nth-child(4) { transition-delay: 450ms; }
+        .labels-row .reveal:nth-child(1) {
+          transition-delay: 0ms;
+        }
+        .labels-row .reveal:nth-child(2) {
+          transition-delay: 150ms;
+        }
+        .labels-row .reveal:nth-child(3) {
+          transition-delay: 300ms;
+        }
+        .labels-row .reveal:nth-child(4) {
+          transition-delay: 450ms;
+        }
 
         /* stagger for icons */
-        .icons-row .reveal:nth-child(1) { transition-delay: 0ms; }
-        .icons-row .reveal:nth-child(2) { transition-delay: 150ms; }
-        .icons-row .reveal:nth-child(3) { transition-delay: 300ms; }
-        .icons-row .reveal:nth-child(4) { transition-delay: 450ms; }
+        .icons-row .reveal:nth-child(1) {
+          transition-delay: 0ms;
+        }
+        .icons-row .reveal:nth-child(2) {
+          transition-delay: 150ms;
+        }
+        .icons-row .reveal:nth-child(3) {
+          transition-delay: 300ms;
+        }
+        .icons-row .reveal:nth-child(4) {
+          transition-delay: 450ms;
+        }
       `}</style>
     </footer>
   );
@@ -139,7 +172,13 @@ function FacebookIcon({ className = "" }) {
 }
 function InstagramIcon({ className = "" }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.8">
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />

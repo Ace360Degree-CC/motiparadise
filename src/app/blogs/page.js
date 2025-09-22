@@ -54,9 +54,12 @@ const Blogs = () => {
       <div className="w-screen py-30 flex flex-col gap-10">
         {/* title */}
         <div className="upper_block max-w-6xl mx-auto px-6 text-center">
-          <p className="text-2xl md:text-3xl font-[Oswald] text-black tracking-wide uppercase animate-slideUp animation-delay">
-            Blogs
-          </p>
+          <p className="text-2xl md:text-3xl font-[Cinzel] font-bold text-[#6E8628] tracking-wide uppercase animate-slideUp animation-delay">
+          Our Stories & Insights
+        </p>
+        <p className="text-lg md:text-lg px-14 font-[Oswald] text-black/80 tracking-wide uppercase animate-slideUp animation-delay">
+          Stay inspired with our latest articles — from travel diaries and lifestyle ideas to unique experiences that define Moti Paradise. Explore what’s new and discover stories worth sharing.
+        </p>
         </div>
 
         {/* blog grid */}

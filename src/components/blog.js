@@ -28,11 +28,14 @@ const Blog = () => {
   };
 
   return (
-    <div className="w-screen bg-black pb-26 py-20 flex flex-col gap-10">
+    <div className="w-screen bg-black pb-26 py-16 flex flex-col gap-10">
       {/* title */}
-      <div className="upper_block max-w-6xl mx-auto px-6 text-center">
-        <p className="text-2xl md:text-3xl font-[Oswald] text-white tracking-wide uppercase animate-slideUp animation-delay">
-          Blogs
+      <div className="upper_block max-w-6xl mx-auto px-6 flex flex-col gap-4 text-center">
+        <p className="text-2xl md:text-3xl font-[Cinzel] font-bold text-white tracking-wide uppercase animate-slideUp animation-delay">
+          Our Stories & Insights
+        </p>
+        <p className="text-lg md:text-lg px-8 font-[Oswald] text-white/80 tracking-wide uppercase animate-slideUp animation-delay">
+          Stay inspired with our latest articles — from travel diaries and lifestyle ideas to unique experiences that define Moti Paradise. Explore what’s new and discover stories worth sharing.
         </p>
       </div>
 

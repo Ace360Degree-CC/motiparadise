@@ -21,7 +21,6 @@ export default function Navbar({ openModal }) {
   useEffect(() => {
     setLoaded(true);
 
-    // IntersectionObserver to track active section
     const sectionIds = menuItems.map((item) => item.href.replace("#", ""));
     const sections = sectionIds.map((id) => document.getElementById(id));
 
@@ -49,7 +48,7 @@ export default function Navbar({ openModal }) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 md:px-12 lg:px-20 py-4 shadow-sm bg-white transition-all duration-700 ease-in-out ${
+      className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 md:px-8 lg:px-12 xl:px-20 py-4 shadow-sm bg-white transition-all duration-700 ease-in-out ${
         loaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"
       }`}
     >
@@ -65,7 +64,7 @@ export default function Navbar({ openModal }) {
       </Link>
 
       {/* Desktop Menu */}
-      <ul className="hidden md:flex space-x-8 lg:space-x-12 text-gray-800 font-oswald text-[16px] lg:text-[18px]">
+      <ul className="hidden xl:flex space-x-8 xl:space-x-12 text-gray-800 font-oswald text-[16px] xl:text-[18px]">
         {menuItems.map((item, index) => (
           <li
             key={item.href}
@@ -92,10 +91,10 @@ export default function Navbar({ openModal }) {
       </ul>
 
       {/* Desktop Buttons */}
-      <div className="flex gap-6">
+      <div className="hidden xl:flex gap-6">
         <Link
           href="/blogs"
-          className={`hidden md:block border border-[#6E8628] bg-[#6E8628] text-white px-5 py-2 rounded font-oswald text-[18px] lg:text-[20px]
+          className={`border border-[#6E8628] bg-[#6E8628] text-white px-5 py-2 rounded font-oswald text-[18px] xl:text-[20px]
           transition-all duration-200 hover:bg-white hover:text-black
           ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
            hover:scale-105`}
@@ -105,7 +104,7 @@ export default function Navbar({ openModal }) {
         </Link>
         <button
           onClick={openModal}
-          className={`hidden cursor-pointer md:block border border-[#6E8628] text-[#202020] px-5 py-2 rounded font-oswald text-[18px] lg:text-[20px]
+          className={`cursor-pointer border border-[#6E8628] text-[#202020] px-5 py-2 rounded font-oswald text-[18px] xl:text-[20px]
             transition-all duration-300 hover:bg-[#6E8628] hover:text-white
             ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}
             animate-pulse hover:scale-105`}
@@ -115,9 +114,9 @@ export default function Navbar({ openModal }) {
         </button>
       </div>
 
-      {/* Mobile Hamburger */}
+      {/* Mobile Hamburger (active below xl) */}
       <button
-        className="md:hidden flex flex-col justify-center items-center space-y-[5px] w-8 h-8"
+        className="xl:hidden flex flex-col justify-center items-center space-y-[5px] w-8 h-8"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         <span
@@ -139,10 +138,8 @@ export default function Navbar({ openModal }) {
 
       {/* Mobile Menu */}
       <div
-        className={`absolute top-[72px] left-0 w-full bg-white shadow-md md:hidden flex flex-col items-center space-y-6 py-6 font-oswald text-[18px] transition-all duration-500 ease-in-out ${
-          menuOpen
-            ? "max-h-[500px] opacity-100"
-            : "max-h-0 opacity-0 overflow-hidden"
+        className={`absolute top-[72px] left-0 w-full bg-white shadow-md xl:hidden flex flex-col items-center space-y-6 py-6 font-oswald text-[18px] transition-all duration-500 ease-in-out ${
+          menuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
         }`}
       >
         {menuItems.map((item, index) => (

@@ -45,7 +45,7 @@ export default async function BlogDetail({ params }) {
             <img
               src={images[0]}
               alt={acf.heading || post.title.rendered}
-              className="w-full h-full object-cover rounded-lg"
+              className="w-full h-full object-cover "
             />
           </div>
         )}
@@ -90,7 +90,7 @@ export default async function BlogDetail({ params }) {
             <img
               src={images[1]}
               alt="middle"
-              className="w-full h-auto object-cover rounded-lg"
+              className="w-full h-auto object-cover "
             />
             {acf.mini_title && (
               <h3 className="text-xl font-[Cinzel] text-gray-900">
@@ -119,7 +119,7 @@ export default async function BlogDetail({ params }) {
             <img
               src={images[2]}
               alt="final"
-              className="w-full h-auto object-cover rounded-lg"
+              className="w-full h-auto object-cover "
             />
             {acf.final_paragraph && (
               <p className="text-gray-700 font-[Oswald]">{acf.final_paragraph}</p>

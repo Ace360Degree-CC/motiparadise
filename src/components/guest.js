@@ -15,7 +15,7 @@ export default function Guest() {
       review:
         "If you’re looking for a private villa in Udaipur with a big swimming pool and a beautiful garden, this is the perfect place! Ideal for those who want privacy, comfort, and a space to relax and chill.",
       stars: 5,
-      images: ["/1gallery.png"],
+      images: [],
     },
     {
       id: 2,
@@ -35,10 +35,20 @@ export default function Guest() {
       review:
         "Amazing property, spacious rooms, and the pool was super clean. Our family had the best time!",
       stars: 5,
-      images: ["/1guest.png", "/2guest.png"],
+      images: [],
     },
   ];
 
+  // ✅ Auto-slide logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActive((prev) => (prev + 1) % reviews.length);
+    }, 5000); // 5 seconds
+
+    return () => clearInterval(interval);
+  }, [reviews.length]);
+
+  // ✅ Animate on scroll (optional, from your old code)
   useEffect(() => {
     const elements = sectionRef.current.querySelectorAll(".animate-on-scroll");
     const observer = new IntersectionObserver(
@@ -62,28 +72,28 @@ export default function Guest() {
     <section ref={sectionRef} className="bg-white py-20 overflow-hidden">
       <div className="max-w-5xl mx-auto px-6 text-center">
         {/* Subheading */}
-        <p className="animate-on-scroll fade-down font-[Oswald] font-bold text-[20px] text-[#6E8628] tracking-wide uppercase">
+        <p className="animate-on-scroll fade-down font-[Oswald] font-bold text-[22px] text-[#6E8628] tracking-wide uppercase">
           Love from our clients
         </p>
 
         {/* Heading */}
-        <h2 className="animate-on-scroll scale-up font-[Cinzel] font-bold text-[#202020] text-[36px] md:text-[50px] mt-2">
+        <h2 className="animate-on-scroll scale-up font-[Cinzel] font-bold text-[#202020] text-[42px] md:text-[56px] mt-2">
           What Guests Say
         </h2>
 
         {/* Review Card */}
-        <div className="mt-12 bg-white border border-gray-200 rounded-xl shadow-md p-6 text-left max-w-3xl mx-auto">
-          {/* Reviewer */}
-          <div className="flex items-center gap-4">
+        <div className="mt-12 bg-transparent p-6 text-center max-w-3xl mx-auto transition-all duration-500">
+          {/* Reviewer inline */}
+          <div className="flex items-center justify-center gap-4">
             <Image
               src={reviews[active].avatar}
               alt={reviews[active].name}
-              width={48}
-              height={48}
+              width={56}
+              height={56}
               className="rounded-full"
             />
-            <div>
-              <p className="font-semibold text-[#202020]">
+            <div className="text-left">
+              <p className="font-semibold text-[#202020] text-[18px]">
                 {reviews[active].name}
               </p>
               <p className="text-sm text-gray-500">{reviews[active].role}</p>
@@ -91,12 +101,12 @@ export default function Guest() {
           </div>
 
           {/* Stars */}
-          <div className="flex mt-3 gap-1">
+          <div className="flex justify-center mt-3 gap-1">
             {[...Array(reviews[active].stars)].map((_, i) => (
               <svg
                 key={i}
-                width="18"
-                height="18"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
@@ -109,20 +119,20 @@ export default function Guest() {
           </div>
 
           {/* Review text */}
-          <p className="mt-3 text-gray-700 text-[16px] leading-relaxed">
+          <p className="mt-4 text-gray-700 text-[18px] leading-relaxed max-w-2xl mx-auto">
             {reviews[active].review}
           </p>
 
           {/* Review images */}
           {reviews[active].images.length > 0 && (
-            <div className="mt-4 flex gap-3 flex-wrap">
+            <div className="mt-5 flex justify-center gap-3 flex-wrap">
               {reviews[active].images.map((img, i) => (
                 <Image
                   key={i}
                   src={img}
                   alt={`Review image ${i + 1}`}
-                  width={160}
-                  height={100}
+                  width={200}
+                  height={130}
                   className="rounded-md object-cover"
                 />
               ))}
@@ -131,7 +141,7 @@ export default function Guest() {
         </div>
 
         {/* Avatars */}
-        <div className="mt-10 flex items-center justify-center gap-10">
+        <div className="mt-12 flex items-center justify-center gap-12">
           {reviews.map((person, i) => (
             <button
               key={person.id}
@@ -141,8 +151,8 @@ export default function Guest() {
               <Image
                 src={person.avatar}
                 alt={person.name}
-                width={56}
-                height={56}
+                width={64}
+                height={64}
                 className={`rounded-full transition-all duration-300 ${
                   active === i
                     ? "ring-4 ring-[#6E8628] scale-110"

@@ -10,20 +10,20 @@ export default function Guest() {
     {
       id: 1,
       name: "Manibhadra Singh Rathore",
-      role: "Local Guide",
-      avatar: "/person1.png",
+      role: "Customer",
+      avatar: "/unnamed (3).png",
       review:
-        "If you’re looking for a private villa in Udaipur with a big swimming pool and a beautiful garden, this is the perfect place! Ideal for those who want privacy, comfort, and a space to relax and chill.",
+        "If you’re looking for a private villa in Udaipur with a big swimming pool and a beautiful garden, this is the perfect place! Ideal for those who want privacy, comfort, and a space to relax and chill. I highly recommend this property — a must-visit!",
       stars: 5,
       images: [],
     },
     {
       id: 2,
-      name: "Lisa Haydon",
+      name: "Er M K Choudhary",
       role: "Customer",
-      avatar: "/person2.png",
+      avatar: "/unnamed (2).png",
       review:
-        "A perfect weekend escape with privacy, cleanliness, and great service!",
+        "Best Villa for family in Udaipur and nearby to city, best service, good hygiene and all good",
       stars: 5,
       images: [],
     },
@@ -31,9 +31,19 @@ export default function Guest() {
       id: 3,
       name: "Rahul Mehta",
       role: "Customer",
-      avatar: "/person3.png",
+      avatar: "/unnamed (1).png",
       review:
-        "Amazing property, spacious rooms, and the pool was super clean. Our family had the best time!",
+        "A pleasant getaway with family and friends.. pool is the highlight of this place which is well maintained and everything was beautiful and nicee..",
+      stars: 5,
+      images: [],
+    },
+    {
+      id: 4,
+      name: "Muskan jain 17",
+      role: "Customer",
+      avatar: "/unnamed.png",
+      review:
+        "Best place to have a fun weekend with your family and friends.. Pure veg food and nice place for photos also.. Do visit..",
       stars: 5,
       images: [],
     },

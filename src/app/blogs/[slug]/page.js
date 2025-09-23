@@ -1,5 +1,6 @@
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import Link from "next/link"; // 👈 add this import
 
 // fetch single post by slug
 async function getPost(slug) {
@@ -126,6 +127,15 @@ export default async function BlogDetail({ params }) {
             )}
           </div>
         )}
+
+        {/* Back Button */}
+        <div className="flex justify-center mt-12">
+          <Link href="/blogs">
+            <button className="px-6 py-2 bg-[#6E8628] text-white font-[Oswald] rounded hover:bg-black transition">
+              ← Back to Blogs
+            </button>
+          </Link>
+        </div>
       </div>
 
       <Footer />

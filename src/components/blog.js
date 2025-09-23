@@ -98,7 +98,7 @@ const Blog = () => {
              transform transition duration-300 cursor-pointer 
              hover:scale-101 hover:text-white hover:bg-[#88a737]"
         >
-          Read More
+          Read All Blogs
         </button>
         </Link>
       </div>

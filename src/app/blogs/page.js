@@ -51,15 +51,17 @@ const Blogs = () => {
     <div className="bg-white min-h-screen flex flex-col">
       <Navbar />
 
-      <div className="w-full py-30 flex flex-col gap-10">
+      <div className="w-full py-20 flex flex-col gap-10">
         {/* title */}
         <div className="upper_block max-w-6xl mx-auto px-6 text-center">
-          <p className="text-2xl md:text-3xl font-[Cinzel] font-bold text-[#6E8628] tracking-wide uppercase animate-slideUp animation-delay">
-          Our Stories & Insights
-        </p>
-        <p className="text-lg md:text-lg px-14 font-[Oswald] text-black/80 tracking-wide uppercase animate-slideUp animation-delay">
-          Stay inspired with our latest articles — from travel diaries and lifestyle ideas to unique experiences that define Moti Paradise. Explore what’s new and discover stories worth sharing.
-        </p>
+          <p className="text-2xl md:text-3xl font-[Cinzel] font-bold text-[#6E8628] tracking-wide uppercase">
+            Our Stories & Insights
+          </p>
+          <p className="text-lg md:text-lg px-14 font-[Oswald] text-black/80 tracking-wide uppercase">
+            Stay inspired with our latest articles — from travel diaries and lifestyle ideas
+            to unique experiences that define Moti Paradise. Explore what’s new and discover
+            stories worth sharing.
+          </p>
         </div>
 
         {/* blog grid */}
@@ -76,20 +78,32 @@ const Blogs = () => {
                 <Link
                   href={`/blogs/${post.slug}`}
                   key={post.id}
-                  className="group font-[Oswald] bg-white border border-gray-300 rounded-lg p-2 hover:shadow-lg transition"
+                  className="group font-[Oswald] bg-white rounded-lg shadow-md hover:shadow-xl transition p-4 flex flex-col"
                 >
+                  {/* Blog Image */}
                   <img
                     src={image}
-                    className="w-full h-70 object-cover mb-4 rounded"
+                    className="w-full h-56 object-cover mb-4 rounded"
                     alt={post.title.rendered}
                   />
-                  <p className="text-lg md:text-xl text-black group-hover:text-[#6E8628] tracking-wide uppercase">
+
+                  {/* Title */}
+                  <p className="text-lg md:text-xl font-bold text-black group-hover:text-[#6E8628] tracking-wide uppercase mb-2">
                     {post.title.rendered}
                   </p>
-                  <p className="text-gray-600">
-                    {post.excerpt.rendered.replace(/<[^>]+>/g, "").slice(0, 100)}
-                    ...
+
+                  {/* Excerpt */}
+                  <p className="text-gray-600 flex-grow">
+                    {post.excerpt.rendered.replace(/<[^>]+>/g, "").slice(0, 120)}...
                   </p>
+
+                  {/* Button */}
+                  <button
+                    className="mt-4 w-full cursor-pointer bg-[#6E8628] text-white py-2 rounded font-[Oswald]
+                      transform transition duration-300 hover:scale-105 hover:bg-black"
+                  >
+                    Continue Reading
+                  </button>
                 </Link>
               );
             })

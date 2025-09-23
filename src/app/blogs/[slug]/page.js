@@ -38,18 +38,7 @@ export default async function BlogDetail({ params }) {
     <div className="bg-white min-h-screen flex flex-col">
       <Navbar />
 
-      <div className="max-w-4xl mx-auto px-6 py-20 space-y-12">
-        {/* Banner Image */}
-        {images[0] && (
-          <div className="w-full aspect-[21/9] mb-6">
-            <img
-              src={images[0]}
-              alt={acf.heading || post.title.rendered}
-              className="w-full h-full object-cover "
-            />
-          </div>
-        )}
-
+      <div className="max-w-4xl mx-auto px-6 py-30 space-y-12">
         {/* Heading + Subheading */}
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-[Cinzel] text-gray-900 mb-4">
@@ -61,6 +50,17 @@ export default async function BlogDetail({ params }) {
             </p>
           )}
         </div>
+
+        {/* Banner Image */}
+        {images[0] && (
+          <div className="w-full aspect-[21/9] mb-6">
+            <img
+              src={images[0]}
+              alt={acf.heading || post.title.rendered}
+              className="w-full h-full object-cover "
+            />
+          </div>
+        )}
 
         {/* Content Heading + Description + List */}
         <div>

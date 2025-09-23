@@ -162,7 +162,7 @@ export default function Navbar() {
             {/* Close Button */}
             <button
               onClick={startClose}
-              className="absolute top-3 right-3 text-gray-800 text-3xl font-bold hover:text-red-500 transition"
+              className="absolute top-3 right-3 text-white text-3xl font-bold z-50 hover:text-red-500 transition"
             >
               ✕
             </button>

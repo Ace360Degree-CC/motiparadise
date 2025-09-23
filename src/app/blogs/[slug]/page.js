@@ -65,17 +65,17 @@ export default async function BlogDetail({ params }) {
         {/* Content Heading + Description + List */}
         <div>
           {acf.content_heading && (
-            <h2 className="text-2xl font-[Oswald] text-gray-900 mb-4">
+            <h2 className="text-2xl font-oswald text-gray-900 mb-4">
               {acf.content_heading}
             </h2>
           )}
           {acf.content_description && (
-            <p className="text-gray-700 font-[Oswald] mb-4">
+            <p className="text-gray-700 font-oswald mb-4">
               {acf.content_description}
             </p>
           )}
           {acf.list && (
-            <ul className="list-disc pl-6 space-y-2 text-gray-700 font-[Oswald]">
+            <ul className="list-disc pl-6 space-y-2 text-gray-700 font-oswald">
               {acf.list.split("\n").map(
                 (item, idx) =>
                   item.trim() && <li key={idx}>{item.replace("•", "").trim()}</li>
@@ -98,12 +98,12 @@ export default async function BlogDetail({ params }) {
               </h3>
             )}
             {acf.list_title && (
-              <h4 className="text-lg font-[Oswald] text-gray-800 mt-2">
+              <h4 className="text-lg font-oswald text-gray-800 mt-2">
                 {acf.list_title}
               </h4>
             )}
             {acf.list_items && (
-              <ul className="list-disc pl-6 space-y-2 text-gray-700 font-[Oswald]">
+              <ul className="list-disc pl-6 space-y-2 text-gray-700 font-oswald">
                 {acf.list_items.split("\n").map(
                   (item, idx) =>
                     item.trim() && <li key={idx}>{item.replace("•", "").trim()}</li>
@@ -122,7 +122,7 @@ export default async function BlogDetail({ params }) {
               className="w-full h-auto object-cover "
             />
             {acf.final_paragraph && (
-              <p className="text-gray-700 font-[Oswald]">{acf.final_paragraph}</p>
+              <p className="text-gray-700 font-oswald">{acf.final_paragraph}</p>
             )}
           </div>
         )}

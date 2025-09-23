@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-// import ContactModal from "@/components/ContactModal"; // make sure path is correct
 
 // fetch single post by slug
 async function getPost(slug) {
@@ -21,18 +19,11 @@ async function getPost(slug) {
 }
 
 export default function BlogDetailWrapper({ params }) {
-  const [modalOpen, setModalOpen] = useState(false);
-
   return (
     <>
-      {/* Navbar now receives openModal */}
-      <Navbar openModal={() => setModalOpen(true)} />
+      <Navbar />  {/* Navbar now contains the BOOK NOW modal */}
 
-      {/* Blog detail content */}
       <BlogDetailContent slug={params.slug} />
-
-      {/* Contact Modal */}
-      {modalOpen && <ContactModal onClose={() => setModalOpen(false)} />}
 
       <Footer />
     </>

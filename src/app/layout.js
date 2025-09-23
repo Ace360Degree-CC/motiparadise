@@ -39,6 +39,9 @@ export const metadata = {
     "room with private pool in udaipur",
     "udaipur villas",
   ],
+  verification: {
+    google: "zPt2nTmr8iWro24pHfgzd9WZp4Yjdd18UVCdpdJ7MMk",
+  },
 };
 
 export default function RootLayout({ children }) {

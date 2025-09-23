@@ -150,7 +150,7 @@ export default function Hero() {
         <button
           onClick={openModal}
           data-animate="animate-slideUp"
-          className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 font-[Oswald] text-lg tracking-wide rounded shadow-lg transition-all opacity-0"
+          className="bg-[#6E8628] hover:bg-green-800 text-white px-8 py-4 font-[Oswald] text-lg tracking-wide rounded shadow-lg transition-all opacity-0"
         >
           Book Your Stay Now!
         </button>

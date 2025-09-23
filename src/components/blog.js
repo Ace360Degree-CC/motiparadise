@@ -60,30 +60,28 @@ const Blog = () => {
               <Link
                 key={post.id}
                 href={`/blogs/${post.slug}`}
-                className="blog_item group font-[Oswald] hover:shadow-lg transition rounded-lg"
+                className="blog_item group font-[Oswald] hover:shadow-lg transition block p-4 bg-white"
               >
                 <img
                   src={image}
                   className="w-full h-70 object-cover mb-4 rounded"
                   alt={post.title.rendered}
                 />
-                <p className="text-lg md:text-xl text-white group-hover:text-[#6E8628] tracking-wide uppercase animate-slideUp">
+                <p className="text-lg md:text-xl text-black group-hover:text-[#6E8628] tracking-wide uppercase animate-slideUp">
                   {post.title.rendered}
                 </p>
-                <p className="text-gray-300">
+                <p className="text-gray-600">
                   {description.length > 120
                     ? description.slice(0, 120) + "..."
                     : description}
                 </p>
-                <Link href={`/blogs/${post.slug}`} className="block cursor-pointer mt-4">
-                  <button
-                    className="w-full cursor-pointer bg-[#6E8628] text-black py-2 
-               transform transition duration-300 
-               hover:scale-105 hover:text-white hover:bg-[#88a737]"
-                  >
-                    Continue reading
-                  </button>
-                </Link>
+                <button
+                  className="w-full mt-4 cursor-pointer bg-[#6E8628] text-white py-2 
+                             transform transition duration-300 
+                             hover:scale-102 hover:text-white hover:bg-black"
+                >
+                  Continue reading
+                </button>
               </Link>
             );
           })
@@ -91,15 +89,17 @@ const Blog = () => {
           <p className="text-white text-center col-span-3">Loading blogs...</p>
         )}
       </div>
+
+      {/* read all blogs button */}
       <div className="w-full flex justify-center">
         <Link href="/blogs">
-        <button
-          className="px-12  mt-4 bg-[#6E8628] font-[Oswald] text-black py-2 
-             transform transition duration-300 cursor-pointer 
-             hover:scale-101 hover:text-white hover:bg-[#88a737]"
-        >
-          Read All Blogs
-        </button>
+          <button
+            className="px-12 mt-4 bg-[#6E8628] font-[Oswald] text-black py-2 
+                       transform transition duration-300 cursor-pointer 
+                       hover:scale-101 hover:text-white hover:bg-[#88a737]"
+          >
+            Read All Blogs
+          </button>
         </Link>
       </div>
     </div>

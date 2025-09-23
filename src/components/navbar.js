@@ -84,7 +84,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden lg:flex space-x-6 xl:space-x-12 text-gray-800 font-oswald text-[15px] lg:text-[17px] xl:text-[18px]">
+        <ul className="hidden lg:flex space-x-6 xl:space-x-8 text-gray-800 font-oswald text-[15px] lg:text-[17px] xl:text-[18px]">
           {menuItems.map((item) => (
             <li key={item.href}>
               <Link
@@ -100,10 +100,10 @@ export default function Navbar() {
         </ul>
 
         {/* Desktop Buttons */}
-        <div className="hidden lg:flex gap-4">
+        <div className="hidden ml-6 lg:flex gap-4">
           <Link
             href="/blogs"
-            className="border border-[#6E8628] bg-[#6E8628] text-white px-5 py-2 rounded font-oswald text-[18px] hover:bg-white hover:text-black"
+            className="border border-[#6E8628] bg-[#6E8628] text-white px-5 py-2 rounded font-oswald flex justify-center items-center text-[18px] hover:bg-white hover:text-black"
           >
             BLOGS
           </Link>

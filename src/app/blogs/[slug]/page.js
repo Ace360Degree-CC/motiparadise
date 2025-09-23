@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import ContactModal from "@/components/ContactModal"; // make sure path is correct
+// import ContactModal from "@/components/ContactModal"; // make sure path is correct
 
 // fetch single post by slug
 async function getPost(slug) {

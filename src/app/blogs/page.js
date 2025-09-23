@@ -51,7 +51,7 @@ const Blogs = () => {
     <div className="bg-white min-h-screen flex flex-col">
       <Navbar />
 
-      <div className="w-full py-20 flex flex-col gap-10">
+      <div className="w-full py-20 pt-30 flex flex-col gap-10">
         {/* title */}
         <div className="upper_block max-w-6xl mx-auto px-6 text-center">
           <p className="text-2xl md:text-3xl font-[Cinzel] font-bold text-[#6E8628] tracking-wide uppercase">

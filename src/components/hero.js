@@ -20,7 +20,7 @@ export default function Hero() {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]);
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
@@ -113,6 +113,21 @@ export default function Hero() {
         >
           <ChevronRight size={28} />
         </button>
+
+        {/* Pagination Dots */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3 z-10">
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={`w-3 h-3 rounded-full transition-all ${
+                currentIndex === idx
+                  ? "bg-white scale-125"
+                  : "bg-white/50 hover:bg-white"
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Content */}

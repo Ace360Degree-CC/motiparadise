@@ -85,7 +85,7 @@ export default function Location() {
               className="mb-6"
             />
             <p className="font-[Oswald] text-[20px] text-[#202020]">
-              Just 2 km from Udaipur City
+              Just 3 km from Udaipur City
             </p>
           </div>
 

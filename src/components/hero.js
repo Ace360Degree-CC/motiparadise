@@ -76,7 +76,7 @@ export default function Hero() {
   return (
     <section ref={heroRef} className="relative w-full overflow-hidden">
       {/* Slider */}
-      <div className="relative w-full h-[700px] overflow-hidden">
+      <div className="relative w-full h-[800px] overflow-hidden">
         <div
           className="flex transition-transform duration-1000 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -84,7 +84,7 @@ export default function Hero() {
           {images.map((src, idx) => (
             <div
               key={idx}
-              className="relative flex-shrink-0 w-full h-[700px] sm:h-[400px] md:h-[600px] lg:h-[700px]"
+              className="relative flex-shrink-0 w-full h-[700px] sm:h-[400px] md:h-[600px] lg:h-[800px]"
             >
               <Image
                 src={src}
@@ -93,7 +93,7 @@ export default function Hero() {
                 priority={idx === 0}
                 className="object-cover w-full h-full"
               />
-              <div className="absolute inset-0 bg-black/50"></div>
+              <div className="absolute inset-0 bg-black/10"></div>
             </div>
           ))}
         </div>

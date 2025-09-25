@@ -36,12 +36,12 @@ export default function PrivateEscapeSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#6E8628] py-12 sm:py-16 md:py-20 flex flex-col items-center text-center px-4 sm:px-6 md:px-12"
+      className="bg-[#6E8628] py-12 sm:py-16 md:py-10 flex flex-col items-center text-center px-4 sm:px-6 md:px-12"
     >
       {/* Heading */}
       <h2
         data-animate="animate-fadeDown"
-        className="text-white font-[Cinzel] font-bold 
+        className="text-white -mt-[30px] font-[Cinzel] font-bold 
           text-3xl sm:text-4xl md:text-5xl lg:text-[64px] 
           mb-4 sm:mb-6 leading-snug sm:leading-tight 
           transition-all duration-1000 opacity-0"
@@ -53,8 +53,8 @@ export default function PrivateEscapeSection() {
       <p
         data-animate="animate-fadeUp"
         className="text-white font-[Oswald] 
-          text-base sm:text-lg md:text-xl lg:text-2xl 
-          max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl 
+          text-base sm:text-lg md:text-xl lg:text-xl 
+          max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-5xl 
           transition-all duration-1000 delay-300 opacity-0"
       >
         Nestled amidst the peaceful location on Tiger Hills, just 20 minutes from Udaipur city, Moti Paradise Villa offers you an exclusive retreat that blends comfort, privacy, and nature.

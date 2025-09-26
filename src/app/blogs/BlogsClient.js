@@ -28,7 +28,7 @@ export default function BlogsClient() {
       <Navbar />
 
       {/* Page Title */}
-      <div className="max-w-6xl mx-auto px-6 text-center my-12">
+      <div className="max-w-6xl mx-auto px-6 pt-25 text-center my-12">
         <h1 className="text-3xl md:text-4xl font-[Cinzel] font-bold text-[#6E8628]">
           Our Stories & Insights
         </h1>

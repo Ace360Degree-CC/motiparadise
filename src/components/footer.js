@@ -62,7 +62,7 @@ export default function Footer() {
                 <InstagramIcon className="reveal w-10 h-10 text-white/95" />
               </Link>
               <Link
-                href="https://www.youtube.com/@MotiParadise"
+                href="https://www.youtube.com/@Moti_Paradise"
                 className="inline-flex justify-center"
               >
                 <YoutubeIcon className="reveal w-10 h-10 text-white/95" />
@@ -82,18 +82,36 @@ export default function Footer() {
               ref={labelsRef}
               className="labels-row grid grid-cols-1 sm:grid-cols-4 text-center gap-4 sm:gap-6"
             >
-              <p className="reveal font-[Oswald] text-[#6E8628] text-lg sm:text-xl font-semibold">
+              <Link
+                href="https://www.facebook.com/profile.php?id=61577629348900"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="reveal font-[Oswald] text-[#6E8628] text-lg sm:text-xl font-semibold hover:underline"
+              >
                 Moti Paradise Villa
-              </p>
-              <p className="reveal font-[Oswald] text-[#6E8628] text-lg sm:text-xl font-semibold">
+              </Link>
+              <Link
+                href="https://www.instagram.com/motiparadise_/?igsh=MTRocjk0cHpyNHMwMA%3D%3D#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="reveal font-[Oswald] text-[#6E8628] text-lg sm:text-xl font-semibold hover:underline"
+              >
                 @motiparadise
-              </p>
-              <p className="reveal font-[Oswald] text-[#6E8628] text-lg sm:text-xl font-semibold">
+              </Link>
+              <Link
+                href="https://www.youtube.com/@Moti_Paradise"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="reveal font-[Oswald] text-[#6E8628] text-lg sm:text-xl font-semibold hover:underline"
+              >
                 Fab The Family Stays
-              </p>
-              <p className="reveal font-[Oswald] text-[#6E8628] text-lg sm:text-xl font-semibold">
+              </Link>
+              <a
+                href="tel:+918905279300"
+                className=" font-[Oswald] text-[#6E8628] text-lg sm:text-xl font-semibold hover:underline"
+              >
                 +91-8905279300
-              </p>
+              </a>
             </div>
           </div>
         </div>

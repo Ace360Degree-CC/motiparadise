@@ -1,10 +1,11 @@
 "use client";
 // app/components/virtual.js
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 export default function Virtual() {
   const sectionRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const elements = sectionRef.current.querySelectorAll(".animate-on-scroll");
@@ -54,6 +55,7 @@ export default function Virtual() {
               {/* Main Play Button */}
               <button
                 type="button"
+                onClick={() => setIsOpen(true)}
                 className="w-10 h-10 sm:w-14 sm:h-14 
                   flex items-center justify-center rounded-full 
                   bg-white/90 text-black 
@@ -85,6 +87,36 @@ export default function Virtual() {
           </h2>
         </div>
       </div>
+
+      {/* Video Modal */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          onClick={() => setIsOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-4xl aspect-video"
+            onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+          >
+            <iframe
+              className="w-full h-full rounded-lg"
+              src="https://www.youtube.com/embed/8B9UDTqRFa8?autoplay=1&rel=0"
+              title="Villa Tour"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            ></iframe>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute -top-10 right-0 text-white text-3xl"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
